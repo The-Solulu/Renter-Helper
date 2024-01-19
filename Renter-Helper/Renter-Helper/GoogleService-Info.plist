@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyD_3NfB6MpIZaesqS_7-nTNsoe4WYMig-s</string>
+	<key>GCM_SENDER_ID</key>
+	<string>733942461222</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.jonathanwmorris.Renter-Helper</string>
+	<key>PROJECT_ID</key>
+	<string>renter-helper-d752c</string>
+	<key>STORAGE_BUCKET</key>
+	<string>renter-helper-d752c.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:733942461222:ios:71059b9a2f3aa670e987e7</string>
+</dict>
+</plist>
