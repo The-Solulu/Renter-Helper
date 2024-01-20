@@ -1,7 +1,8 @@
 import { Home } from './Views/Home';
 import { People } from './Views/People';
 import { Messages } from './Views/Messages';
-import { Profile } from './Views/Profile';
+import { Settings } from './Views/Settings';
+import { Ionicons, Feather } from '@expo/vector-icons';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
@@ -13,10 +14,34 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="People" component={People} />
-        <Tab.Screen name="Messages" component={Messages} />
-        <Tab.Screen name="Profile" component={Profile} />
+        <Tab.Screen name="Home" component={Home}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="home" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen name="People" component={People}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="person" size={size} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen name="Messages" component={Messages}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="chatbubble-outline" size={size} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen name="Settings" component={Settings}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="settings" size={size} color={color} />
+            ),
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
