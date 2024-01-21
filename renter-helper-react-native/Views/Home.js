@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
+import { db } from '../firebaseConfig';
+import { collection, getDocs } from "firebase/firestore";
 
 
 // You can put your data here
@@ -20,7 +22,6 @@ const rentalData = [
 
 // Rental card component
 function RentalCard({ card }) {
-
     return (
         <View style={styles.card}>
             <Image
@@ -60,6 +61,11 @@ function Home() {
         setLikedCards([...likedCards, cardIndex]);
         console.log('Liked card index:', cardIndex);
     };
+
+    // const querySnapshot = getDocs(collection(db, "Renter"));
+    // querySnapshot.forEach((doc) => {
+    //     console.log(`${doc.id} => ${doc.data()}`);
+    // });
 
     return (
 

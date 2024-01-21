@@ -2,8 +2,8 @@ import { Home } from './Views/Home';
 import { People } from './Views/People';
 import { Messages } from './Views/Messages';
 import { Settings } from './Views/Settings';
-import { Ionicons, Feather } from '@expo/vector-icons';
 
+import { Ionicons, Feather } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
