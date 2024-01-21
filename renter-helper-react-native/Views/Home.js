@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
-import { db } from '../firebaseconfig.js';
+
 
 // You can put your data here
 const rentalData = [
