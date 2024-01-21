@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
+import { db } from '../firebaseconfig.js';
 
 // You can put your data here
 const rentalData = [
@@ -13,34 +14,35 @@ const rentalData = [
         smokingPolicy: 'No Smoking',
         availability: 'Available 7/18',
         leaseLength: '12-Month Lease',
-        imageUri: 'https://reactjs.org/logo-og.png', 
+        imageUri: 'https://reactjs.org/logo-og.png',
     },
 ];
 
 // Rental card component
 function RentalCard({ card }) {
-  return (
-    <View style={styles.card}>
-        <Image
-            style={styles.image}
-            source={{ uri: card.imageUri }}
-        />
-        <Text style={styles.address}>{card.address}</Text>
-        <Text style={styles.price}>{card.price}</Text>
-        <View style={styles.detailsRow}>
-            <Text style={styles.detailsText}>{card.bedrooms}</Text>
-            <Text style={styles.detailsText}>{card.bathrooms}</Text>
+
+    return (
+        <View style={styles.card}>
+            <Image
+                style={styles.image}
+                source={{ uri: card.imageUri }}
+            />
+            <Text style={styles.address}>{card.address}</Text>
+            <Text style={styles.price}>{card.price}</Text>
+            <View style={styles.detailsRow}>
+                <Text style={styles.detailsText}>{card.bedrooms}</Text>
+                <Text style={styles.detailsText}>{card.bathrooms}</Text>
+            </View>
+            <View style={styles.detailsRow}>
+                <Text style={styles.detailsText}>{card.petPolicy}</Text>
+                <Text style={styles.detailsText}>{card.smokingPolicy}</Text>
+            </View>
+            <View style={styles.detailsRow}>
+                <Text style={styles.availability}>{card.availability}</Text>
+                <Text style={styles.leaseLength}>{card.leaseLength}</Text>
+            </View>
         </View>
-        <View style={styles.detailsRow}>
-            <Text style={styles.detailsText}>{card.petPolicy}</Text>
-            <Text style={styles.detailsText}>{card.smokingPolicy}</Text>
-        </View>
-        <View style={styles.detailsRow}>
-            <Text style={styles.availability}>{card.availability}</Text>
-            <Text style={styles.leaseLength}>{card.leaseLength}</Text>
-        </View>
-    </View>
-  );
+    );
 }
 
 // Main home component
@@ -48,20 +50,20 @@ function Home() {
     const [index, setIndex] = useState(0);
     const [likedCards, setLikedCards] = useState([]);
     const [rejectedCards, setRejectedCards] = useState([]);
-  
+
     const onSwipedLeft = (cardIndex) => {
         setRejectedCards([...rejectedCards, cardIndex]);
         console.log('Rejected card index:', cardIndex);
     };
-  
+
     const onSwipedRight = (cardIndex) => {
         setLikedCards([...likedCards, cardIndex]);
         console.log('Liked card index:', cardIndex);
     };
-  
+
     return (
 
-            <Swiper
+        <Swiper
             cards={rentalData}
             renderCard={(card) => <RentalCard card={card} />}
             onSwipedLeft={onSwipedLeft}
@@ -72,11 +74,11 @@ function Home() {
             stackSize={2}
             animateOverlayLabelsOpacity
             animateCardOpacity
-            />
-    
+        />
+
     );
-  }
-  
+}
+
 
 // Constants for styling
 const { width, height } = Dimensions.get('window');
