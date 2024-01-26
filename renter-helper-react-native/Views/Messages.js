@@ -1,12 +1,23 @@
-import { useState } from 'react';
-import { TextInput, View, Text } from 'react-native';
+import React from 'react';
+import { TextInput, View, Text, Button, StyleSheet } from 'react-native';
 
-function Messages() {
+
+const Messages = ({navigation}) => {
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Messages!</Text>
+        <View style = {styles.container}>
+            <Text>Messages Screen</Text>
+            <Button title="click here" onPress={() => navigation.navigate('Chat')}/>
         </View>
     );
-}
+};
 
-export { Messages };
+export default Messages;
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+
+});

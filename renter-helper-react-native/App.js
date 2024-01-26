@@ -2,13 +2,23 @@ import { Home } from './Views/Home';
 import { People } from './Views/People';
 import { Messages } from './Views/Messages';
 import { Settings } from './Views/Settings';
-import { Ionicons, Feather } from '@expo/vector-icons';
 
+import { Ionicons, Feather } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
+
+const MessageStack = ({navigation}) => (
+  <Stack.Navigator>
+    <Stack.Screen name="Messages" component = {Messages}/>
+    <Stack.Screen name="Chat" component = {Chat}/>
+  </Stack.Navigator>
+)
 
 export default function App() {
   return (
@@ -28,7 +38,7 @@ export default function App() {
             ),
           }}
         />
-        <Tab.Screen name="Messages" component={Messages}
+        <Tab.Screen name="Messages" component={MessageStack}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="chatbubble-outline" size={size} color={color} />
