@@ -2,6 +2,7 @@ import { Home } from './Views/Home';
 import { People } from './Views/People';
 import { Messages } from './Views/Messages';
 import { Settings } from './Views/Settings';
+import 'react-native-gesture-handler';
 
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';

@@ -1,5 +1,5 @@
 import React from "react";
-import {View, ScrollView, Text, Button, StyleSheet} from 'react-native'
+import {View, Text, Button, StyleSheet} from 'react-native'
 
 const Chat = () => {
 
