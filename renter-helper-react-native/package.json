@@ -11,8 +11,13 @@
   "dependencies": {
     "@expo/metro-runtime": "^3.1.1",
     "@react-navigation/bottom-tabs": "^6.5.11",
+<<<<<<< HEAD
     "@react-navigation/stack": "^6.3.20",
     "expo": "~50.0.3",
+=======
+    "android": "^0.0.8",
+    "expo": "~50.0.2",
+>>>>>>> 31044655a024d4f7a9d5412d1d8184cdc9cc6bc8
     "expo-keep-awake": "^12.8.2",
     "expo-status-bar": "~1.11.1",
     "firebase": "^10.7.2",
