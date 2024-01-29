@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@react-navigation/native-stack": "^6.9.17"
+    "@react-navigation/native-stack": "^6.9.17",
+    "ios": "^0.0.1"
   }
 }

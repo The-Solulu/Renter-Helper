@@ -1,16 +1,18 @@
+import React, { useState } from "react";
 import { Home } from "./Views/Home";
 import { People } from "./Views/People";
 import { Messages } from "./Views/MessagesScreen";
 import { Settings } from "./Views/Settings";
 import "react-native-gesture-handler";
 
-import { Ionicons, Feather } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ChatScreen from "./Views/ChatScreen";
 import MessagesScreen from "./Views/MessagesScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import AreYouARenterOrOwner from "./Views/AreYouARenterOrOwner.js"; // Import your component
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -23,49 +25,56 @@ const MessageStack = ({ navigation }) => (
 );
 
 export default function App() {
-  return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen
-          name="Home"
-          component={Home}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="home" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="People"
-          component={People}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="person" size={size} color={color} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Messages"
-          component={MessageStack}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="chatbubble-outline" size={size} color={color} />
-            ),
-          }}
-        />
+  const [isSignedOn, setIsSignedOn] = useState(false);
 
-        <Tab.Screen
-          name="Settings"
-          component={Settings}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="settings" size={size} color={color} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
-  );
+  if (isSignedOn) {
+    return (
+      <NavigationContainer>
+        <Tab.Navigator>
+          <Tab.Screen
+            name="Home"
+            component={Home}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="home" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="People"
+            component={People}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="person" size={size} color={color} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Messages"
+            component={MessageStack}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="chatbubble-outline" size={size} color={color} />
+              ),
+            }}
+          />
+  
+          <Tab.Screen
+            name="Settings"
+            component={Settings}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="settings" size={size} color={color} />
+              ),
+            }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
+    );
+  } else {
+    // Render the AreYouARenterOrOwner component
+    return <AreYouARenterOrOwner />;
+  }
 }
 
 const styles = StyleSheet.create({
