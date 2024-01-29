@@ -8,10 +8,12 @@ import { Ionicons, Feather } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import getCollections from './firebase.js';
 import Chat from './Views/Chat';
 
 // const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
 
 /*const MessageStack = ({navigation}) => (
   <Stack.Navigator>
@@ -21,6 +23,7 @@ const Tab = createBottomTabNavigator();
 )*/
 
 export default function App() {
+  getCollections();
   return (
     <NavigationContainer>
       <Tab.Navigator>
@@ -46,7 +49,7 @@ export default function App() {
           }}
 
         />
-        
+
         <Tab.Screen name="Settings" component={Settings}
           options={{
             tabBarIcon: ({ color, size }) => (
@@ -66,5 +69,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  
+
 });
