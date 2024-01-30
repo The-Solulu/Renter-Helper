@@ -19,13 +19,24 @@ const Tab = createBottomTabNavigator();
 
 const MessageStack = ({ navigation }) => (
   <Stack.Navigator>
-    <Stack.Screen name="Messages" component={MessagesScreen} />
-    <Stack.Screen name="Chat" component={ChatScreen} />
+    <Stack.Screen
+      name="Messages"
+      component={MessagesScreen}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
+      name="Chat"
+      component={ChatScreen}
+      options={({ route }) => ({
+        title: route.params.userName,
+        headerBackTitleVisible: false,
+      })}
+    />
   </Stack.Navigator>
 );
 
 export default function App() {
-  const [isSignedOn, setIsSignedOn] = useState(false);
+  const [isSignedOn, setIsSignedOn] = useState(true);
 
   if (isSignedOn) {
     return (
@@ -58,7 +69,7 @@ export default function App() {
               ),
             }}
           />
-  
+
           <Tab.Screen
             name="Settings"
             component={Settings}

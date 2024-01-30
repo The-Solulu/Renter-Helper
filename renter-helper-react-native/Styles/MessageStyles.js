@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.View`
   flex: 1;
@@ -23,8 +23,8 @@ export const UserImgWrapper = styled.View`
 `;
 
 export const UserImg = styled.Image`
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 25px;
 `;
 
@@ -48,13 +48,13 @@ export const UserInfoText = styled.View`
 export const UserName = styled.Text`
   font-size: 14px;
   font-weight: bold;
-  font-family: 'Lato-Regular';
+  font-family: "Lato-Regular";
 `;
 
 export const PostTime = styled.Text`
   font-size: 12px;
   color: #666;
-  font-family: 'Lato-Regular';
+  font-family: "Lato-Regular";
 `;
 
 export const MessageText = styled.Text`
