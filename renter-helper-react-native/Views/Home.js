@@ -4,8 +4,8 @@ import Swiper from 'react-native-deck-swiper';
 import { db } from '../firebaseConfig';
 import { collection, getDocs } from "firebase/firestore";
 
-
 // You can put your data here
+
 const rentalData = [
     {
         address: '999 Mission St',

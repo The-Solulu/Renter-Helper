@@ -6,17 +6,18 @@ import { collection, getDocs } from "firebase/firestore";
 
 
 // You can put your data here
+
 const rentalData = [
     {
-        address: '999 Mission St',
-        price: '$5,000',
-        bedrooms: '4 bedroom',
+        name: 'First Name Last Name',
+        age: '19',
+        interests: 'Art, music, reading',
         bathrooms: '2.5 bathroom',
-        petPolicy: 'Pet Allowed',
+        tidy: 'Clean',
         smokingPolicy: 'No Smoking',
         availability: 'Available 7/18',
         leaseLength: '12-Month Lease',
-        imageUri: 'https://reactjs.org/logo-og.png',
+        imageUri: 'https://t4.ftcdn.net/jpg/03/83/25/83/360_F_383258331_D8imaEMl8Q3lf7EKU2Pi78Cn0R7KkW9o.jpg',
     },
 ];
 
@@ -28,14 +29,15 @@ function RentalCard({ card }) {
                 style={styles.image}
                 source={{ uri: card.imageUri }}
             />
-            <Text style={styles.address}>{card.address}</Text>
-            <Text style={styles.price}>{card.price}</Text>
+            <Text style={styles.name}>{card.name}</Text>
+
+            <Text style={styles.age}>{card.age}</Text>
             <View style={styles.detailsRow}>
-                <Text style={styles.detailsText}>{card.bedrooms}</Text>
+                <Text style={styles.detailsText}>{card.interests}</Text>
                 <Text style={styles.detailsText}>{card.bathrooms}</Text>
             </View>
             <View style={styles.detailsRow}>
-                <Text style={styles.detailsText}>{card.petPolicy}</Text>
+                <Text style={styles.detailsText}>{card.tidy}</Text>
                 <Text style={styles.detailsText}>{card.smokingPolicy}</Text>
             </View>
             <View style={styles.detailsRow}>
@@ -110,13 +112,13 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
     },
-    address: {
-        fontSize: 24,
+    name: {
+        fontSize: 23,
         fontWeight: 'bold',
         marginTop: 10,
         marginLeft: cardMargin,
     },
-    price: {
+    age: {
         fontSize: 20,
         fontWeight: '600',
         marginTop: 5,
