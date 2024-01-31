@@ -36,6 +36,17 @@ const MessageStack = ({ navigation }) => (
 );
 
 export default function App() {
+  const getTabBarVisibility = (route) => {
+    const routeName = route.state
+      ? route.state.routes[route.state.index].name
+      : "";
+
+    if (routeName === "Chat") {
+      return false;
+    }
+    return true;
+  };
+
   const [isSignedOn, setIsSignedOn] = useState(true);
 
   if (isSignedOn) {
@@ -63,11 +74,12 @@ export default function App() {
           <Tab.Screen
             name="Messages"
             component={MessageStack}
-            options={{
+            options={({ route }) => ({
+              tabBarVisible: getTabBarVisibility(route),
               tabBarIcon: ({ color, size }) => (
                 <Ionicons name="chatbubble-outline" size={size} color={color} />
               ),
-            }}
+            })}
           />
 
           <Tab.Screen
