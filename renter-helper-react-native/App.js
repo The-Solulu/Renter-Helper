@@ -12,6 +12,7 @@ import ChatScreen from "./Views/ChatScreen";
 import MessagesScreen from "./Views/MessagesScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AreYouARenterOrOwner from "./Views/AreYouARenterOrOwner.js"; // Import your component
+import LoginScreen from "./Views/LoginScreen.js";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -46,7 +47,7 @@ export default function App() {
     return true;
   };
 
-  const [isSignedOn, setIsSignedOn] = useState(true);
+  const [isSignedOn, setIsSignedOn] = useState(false);
 
   if (isSignedOn) {
     return (
@@ -95,7 +96,7 @@ export default function App() {
     );
   } else {
     // Render the AreYouARenterOrOwner component
-    return <AreYouARenterOrOwner />;
+    return <LoginScreen />;
   }
 }
 
