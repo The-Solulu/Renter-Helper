@@ -4,7 +4,6 @@ import { People } from "./Views/People";
 import { Messages } from "./Views/MessagesScreen";
 import { Settings } from "./Views/Settings";
 import "react-native-gesture-handler";
-
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
