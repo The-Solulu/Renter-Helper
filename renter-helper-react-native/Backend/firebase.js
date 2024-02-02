@@ -26,7 +26,7 @@ const getCollections = async () => {
         console.log(error);
     }
 };
-
+// Documentation: https://firebase.google.com/docs/auth/web/password-auth?hl=en&authuser=0
 function create_user_with(email, password) {
     const auth = getAuth();
 
