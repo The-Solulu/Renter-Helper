@@ -35,10 +35,12 @@ function create_user_with(email, password) {
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
+            console.log(user);
             return user;
         })
         .catch((error) => {
             // Error
+            console.log(error);
             return error;
         });
 }
@@ -49,10 +51,12 @@ function sign_in_with(email, password) {
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
+            console.log(user);
             return user;
         })
         .catch((error) => {
             // Error
+            console.log(error);
             return error;
         });
 }
