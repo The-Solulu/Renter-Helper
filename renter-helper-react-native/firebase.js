@@ -1,4 +1,5 @@
 import "firebase/database";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { initializeApp } from 'firebase/app';
 
@@ -26,7 +27,33 @@ const getCollections = async () => {
     }
 };
 
+function create_user_with(email, password) {
+    const auth = getAuth();
 
+    createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            return user;
+        })
+        .catch((error) => {
+            // Error
+            return error;
+        });
+}
 
+function sign_in_with(email, password) {
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            return user;
+        })
+        .catch((error) => {
+            // Error
+            return error;
+        });
+}
 
-export default getCollections;
+export default (getCollections, create_user_with, sign_in_with);
