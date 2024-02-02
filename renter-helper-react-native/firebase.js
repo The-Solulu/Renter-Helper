@@ -14,7 +14,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-
 const getCollections = async () => {
     try {
         const db = getFirestore(app);
@@ -26,5 +25,8 @@ const getCollections = async () => {
         console.log(error);
     }
 };
+
+
+
 
 export default getCollections;
