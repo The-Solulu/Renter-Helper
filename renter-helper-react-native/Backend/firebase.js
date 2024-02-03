@@ -61,4 +61,4 @@ function sign_in_with(email, password) {
         });
 }
 
-export default (getCollections, create_user_with, sign_in_with);
+export default { getCollections, create_user_with, sign_in_with };
