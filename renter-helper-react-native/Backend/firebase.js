@@ -1,5 +1,5 @@
 import "firebase/database";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { initializeApp } from 'firebase/app';
 
@@ -28,7 +28,7 @@ const getCollections = async () => {
 };
 
 // Documentation: https://firebase.google.com/docs/auth/web/password-auth?hl=en&authuser=0
-function create_user_with(email, password) {
+export function create_user_with(email, password) {
     const auth = getAuth(app);
 
     createUserWithEmailAndPassword(auth, email, password)
@@ -45,7 +45,7 @@ function create_user_with(email, password) {
         });
 }
 
-function sign_in_with(email, password) {
+export function sign_in_with(email, password) {
     const auth = getAuth(app);
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -61,4 +61,4 @@ function sign_in_with(email, password) {
         });
 }
 
-export default (getCollections, create_user_with, sign_in_with);
+export default { getCollections, create_user_with, sign_in_with };

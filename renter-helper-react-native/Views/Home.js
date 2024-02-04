@@ -4,7 +4,6 @@ import Swiper from 'react-native-deck-swiper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-
 // You can put your data here
 
 const rentalData = [

@@ -12,6 +12,7 @@ import ChatScreen from "./Views/ChatScreen";
 import MessagesScreen from "./Views/MessagesScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AreYouARenterOrOwner from "./Views/AreYouARenterOrOwner.js"; // Import your component
+import { create_user_with, sign_in_with } from "./Backend/firebase.js"
 import LoginScreen from "./Views/LoginScreen.js";
 
 const Stack = createNativeStackNavigator();

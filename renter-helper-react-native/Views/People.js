@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+// You can put your data here
 
 // You can put your data here
 
 const rentalData = [
     {
-        name: 'First Name Last Name',
-        age: '19',
-        interests: 'Art, music, reading',
+        name: 'First and Last Name',
+        price: '$5,000',
+        bedrooms: '4 bedroom',
         bathrooms: '2.5 bathroom',
-        tidy: 'Clean',
+        petPolicy: 'Pet Allowed',
         smokingPolicy: 'No Smoking',
         availability: 'Available 7/18',
         leaseLength: '12-Month Lease',
@@ -28,29 +31,33 @@ function RentalCard({ card }) {
                 source={{ uri: card.imageUri }}
             />
             <Text style={styles.name}>{card.name}</Text>
-
-            <Text style={styles.age}>{card.age}</Text>
+            <Text style={styles.price}>{card.price}</Text>
             <View style={styles.detailsRow}>
-                <Text style={styles.detailsText}>{card.interests}</Text>
+                <Text style={styles.detailsText}>{card.bedrooms}</Text>
                 <Text style={styles.detailsText}>{card.bathrooms}</Text>
             </View>
             <View style={styles.detailsRow}>
-                <Text style={styles.detailsText}>{card.tidy}</Text>
+                <Text style={styles.detailsText}>{card.petPolicy}</Text>
                 <Text style={styles.detailsText}>{card.smokingPolicy}</Text>
             </View>
             <View style={styles.detailsRow}>
                 <Text style={styles.availability}>{card.availability}</Text>
                 <Text style={styles.leaseLength}>{card.leaseLength}</Text>
             </View>
+            <View style={styles.actionIconsContainer}>
+                <MaterialCommunityIcons name="close" size={34} color="red" />
+                <MaterialCommunityIcons name="heart" size={34} color="green" />
+            </View>
         </View>
     );
 }
 
-// Main home component
+// Main people component
 function People() {
     const [index, setIndex] = useState(0);
     const [likedCards, setLikedCards] = useState([]);
     const [rejectedCards, setRejectedCards] = useState([]);
+    const [allSwiped, setAllSwiped] = useState(false);
 
     const onSwipedLeft = (cardIndex) => {
         setRejectedCards([...rejectedCards, cardIndex]);
@@ -62,26 +69,33 @@ function People() {
         console.log('Liked card index:', cardIndex);
     };
 
-    // const querySnapshot = getDocs(collection(db, "Renter"));
-    // querySnapshot.forEach((doc) => {
-    //     console.log(`${doc.id} => ${doc.data()}`);
-    // });
+    const onSwipedAll = () => {
+        console.log('All cards swiped');
+        setAllSwiped(true); // Set the allSwiped state to true
+    };
 
     return (
-
-        <Swiper
-            cards={rentalData}
-            renderCard={(card) => <RentalCard card={card} />}
-            onSwipedLeft={onSwipedLeft}
-            onSwipedRight={onSwipedRight}
-            onSwipedAll={() => console.log('All cards swiped')}
-            cardIndex={index}
-            backgroundColor={'#f0f0f0'}
-            stackSize={2}
-            animateOverlayLabelsOpacity
-            animateCardOpacity
-        />
-
+        <View style={styles.container}>
+            {allSwiped ? (
+                <Text style={styles.noMoreCardsText}>
+                    No more Available houses in your region 🥲
+                </Text>
+            ) : (
+                <Swiper
+                    containerStyle={styles.swiperContainer}
+                    cards={rentalData}
+                    renderCard={(card) => <RentalCard card={card} />}
+                    onSwipedLeft={onSwipedLeft}
+                    onSwipedRight={onSwipedRight}
+                    onSwipedAll={onSwipedAll}
+                    cardIndex={index}
+                    backgroundColor={'#f0f0f0'}
+                    stackSize={2}
+                    animateOverlayLabelsOpacity
+                    animateCardOpacity
+                />
+            )}
+        </View>
     );
 }
 
@@ -89,57 +103,87 @@ function People() {
 // Constants for styling
 const { width, height } = Dimensions.get('window');
 const cardHeight = 550;
-const cardMargin = 20;
+const cardMargin = 0
+;
 
 // StyleSheet
 const styles = StyleSheet.create({
+    noMoreCardsText: {
+        flex: 1,
+        fontSize: 30,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginTop: cardHeight/3,
+    },
+    // swiperContainer: {
+    //     flex: 1,
+    //     justifyContent: 'center',
+    //     alignItems: 'center',
+    //     padding: 0, // Example to remove padding
+    //     margin: 0,  // Example to remove margin
+    //     // ...any other style properties you want to apply
+    // },
     container: {
         flex: 1,
         backgroundColor: '#f0f0f0',
     },
     card: {
-        height: cardHeight,
+        flex: 0,
         borderRadius: 10,
         borderWidth: 1,
+        // height: cardHeight,
         borderColor: '#E8E8E8',
         backgroundColor: 'white',
+        margin: cardMargin/2,
+        // marginBottom: cardMargin, // Adding a bit more space at the bottom
+        justifyContent: 'center',
+        width: "100%"
     },
     image: {
-        width: width - 2 * cardMargin,
-        height: 300,
+        width: '100%', // Take full width of the card
+        aspectRatio: 1.3, // You can adjust this value to your preference
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
+        resizeMode: 'cover', // or 'contain' based on your preference
     },
-    name: {
-        fontSize: 23,
+    address: {
+        fontSize: 24,
         fontWeight: 'bold',
-        marginTop: 10,
-        marginLeft: cardMargin,
+        marginVertical: 5,
+        paddingHorizontal: '5%',
     },
-    age: {
+    price: {
         fontSize: 20,
         fontWeight: '600',
-        marginTop: 5,
-        marginLeft: cardMargin,
+        marginVertical: 5,
+        paddingHorizontal: '5%',
     },
     detailsRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginHorizontal: cardMargin,
-        marginTop: 5,
+        width: '90%', // Use percentage for responsiveness
+        alignSelf: 'center',
+        marginVertical: 5,
     },
     detailsText: {
-        fontSize: 18,
+        fontSize: 16,
     },
     availability: {
         fontSize: 16,
-        marginLeft: cardMargin,
+        paddingHorizontal: '5%',
+        alignSelf: "center"
     },
     leaseLength: {
         fontSize: 16,
-        marginRight: cardMargin,
+        paddingHorizontal: '5%',
+        alignSelf: "right"
+    },
+    actionIconsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        widht: "100%",
+        padding: 10, // Add padding if necessary
     },
 });
 
 export { People };
-
