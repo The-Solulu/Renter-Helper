@@ -28,7 +28,7 @@ const getCollections = async () => {
 };
 
 // Documentation: https://firebase.google.com/docs/auth/web/password-auth?hl=en&authuser=0
-function create_user_with(email, password) {
+export function create_user_with(email, password) {
     const auth = getAuth(app);
 
     createUserWithEmailAndPassword(auth, email, password)
@@ -45,7 +45,7 @@ function create_user_with(email, password) {
         });
 }
 
-function sign_in_with(email, password) {
+export function sign_in_with(email, password) {
     const auth = getAuth(app);
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
