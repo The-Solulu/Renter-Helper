@@ -1,4 +1,3 @@
-// LoginScreen.js
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import AreYouARenterOrOwner from './AreYouARenterOrOwner';
@@ -9,15 +8,13 @@ const LoginScreen = () => {
   const [loggedIn, setLoggedIn] = useState(false);
 
   const handleLogin = () => {
-    // Add your login logic here
+//keep login stuff here later
     if (!email || !password) {
-      // Display error message if email or password is empty
       Alert.alert('Error', 'Please enter a valid email and password');
       return;
     }
 
-    // Add your actual login logic here
-    // For simplicity, consider login successful if email and password are not empty
+    
     setLoggedIn(true);
   };
 
