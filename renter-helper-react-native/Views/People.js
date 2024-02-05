@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Image, Dimensions,} from 'react-native';
 import Swiper from 'react-native-deck-swiper';
+import {useWindowDimensions} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -11,8 +12,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 const rentalData = [
     {
         name: 'First and Last Name',
-        price: '$5,000',
-        bedrooms: '4 bedroom',
+        interests: 'Reading, cleaning',
         bathrooms: '2.5 bathroom',
         petPolicy: 'Pet Allowed',
         smokingPolicy: 'No Smoking',
@@ -31,7 +31,6 @@ function RentalCard({ card }) {
                 source={{ uri: card.imageUri }}
             />
             <Text style={styles.name}>{card.name}</Text>
-            <Text style={styles.price}>{card.price}</Text>
             <View style={styles.detailsRow}>
                 <Text style={styles.detailsText}>{card.bedrooms}</Text>
                 <Text style={styles.detailsText}>{card.bathrooms}</Text>
@@ -98,11 +97,11 @@ function People() {
         </View>
     );
 }
-
-
 // Constants for styling
 const { width, height } = Dimensions.get('window');
-const cardHeight = 550;
+
+//const {height, width} = useWindowDimensions();
+//const cardHeight = 900;
 const cardMargin = 0
 ;
 
@@ -113,7 +112,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         textAlign: 'center',
-        marginTop: cardHeight/3,
+        marginTop: height,
     },
     // swiperContainer: {
     //     flex: 1,
@@ -134,6 +133,7 @@ const styles = StyleSheet.create({
         // height: cardHeight,
         borderColor: '#E8E8E8',
         backgroundColor: 'white',
+
         margin: cardMargin/2,
         // marginBottom: cardMargin, // Adding a bit more space at the bottom
         justifyContent: 'center',
@@ -141,20 +141,14 @@ const styles = StyleSheet.create({
     },
     image: {
         width: '100%', // Take full width of the card
-        aspectRatio: 1.3, // You can adjust this value to your preference
+        aspectRatio: 1, // You can adjust this value to your preference
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
         resizeMode: 'cover', // or 'contain' based on your preference
     },
-    address: {
+    interests: {
         fontSize: 24,
         fontWeight: 'bold',
-        marginVertical: 5,
-        paddingHorizontal: '5%',
-    },
-    price: {
-        fontSize: 20,
-        fontWeight: '600',
         marginVertical: 5,
         paddingHorizontal: '5%',
     },
