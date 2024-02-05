@@ -1,135 +1,3 @@
-// import React, { useState } from "react";
-// import {
-//   View,
-//   Text,
-//   StyleSheet,
-//   Switch,
-//   TextInput,
-//   TouchableOpacity,
-// } from "react-native";
-
-// function Settings() {
-//     const [notificationsEnabled, setNotificationsEnabled] = useState(false);
-//     const [showDistanceInMiles, setShowDistanceInMiles] = useState(true);
-//     const [bio, setBio] = useState("About Me...");
-
-//     const toggleSwitch = () =>
-//         setNotificationsEnabled((previousState) => !previousState);
-//     const toggleDistanceUnit = () =>
-//         setShowDistanceInMiles((previousState) => !previousState);
-
-//     const [isEditingProfile, setIsEditingProfile] = useState(false);
-//     const [tempBio, setTempBio] = useState(bio);
-//     const toggleEditProfile = () => {
-//         setIsEditingProfile(!isEditingProfile);
-//         setTempBio(bio); // Reset tempBio to current bio when starting to edit
-//     };
-    
-//     const saveProfile = () => {
-//         setBio(tempBio);
-//         setIsEditingProfile(false);
-//     };
-
-//     return (
-//         <View style={styles.container}>
-//         <Text style={styles.title}>Settings</Text>
-
-//         <View style={styles.section}>
-//             <Text style={styles.sectionTitle}>Account Settings</Text>
-//             <TouchableOpacity style={styles.button} onPress={toggleEditProfile}>
-//                 <Text style={styles.buttonText}>{isEditingProfile ? 'Cancel' : 'Edit Profile'}</Text>
-//             </TouchableOpacity>
-
-//             {isEditingProfile && (
-//                 <>
-//                     <View style={styles.inputContainer}>
-//                         <TextInput
-//                             style={styles.input}
-//                             onChangeText={setTempBio}
-//                             value={tempBio}
-//                             multiline
-//                         />
-//                     </View>
-//                     <TouchableOpacity style={styles.button} onPress={saveProfile}>
-//                         <Text style={styles.buttonText}>Save Info</Text>
-//                     </TouchableOpacity>
-//                 </>
-//             )}
-//         </View>
-
-//         <View style={styles.section}>
-//             <Text style={styles.sectionTitle}>Notification Settings</Text>
-//             <View style={styles.switchRow}>
-//             <Text style={styles.switchText}>Enable Notifications</Text>
-//             <Switch
-//                 trackColor={{ false: "#767577", true: "#81b0ff" }}
-//                 thumbColor={notificationsEnabled ? "#f5dd4b" : "#f4f3f4"}
-//                 onValueChange={toggleSwitch}
-//                 value={notificationsEnabled}
-//             />
-//             </View>
-            
-//         </View>
-
-//         {/* Additional settings sections can be added here */}
-//         </View>
-//     );
-// }
-
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         padding: 20,
-//         backgroundColor: "#fff",
-//     },
-//     title: {
-//         fontSize: 22,
-//         fontWeight: "bold",
-//         marginBottom: 20,
-//     },
-//     section: {
-//         marginBottom: 30,
-//     },
-//     sectionTitle: {
-//         fontSize: 18,
-//         fontWeight: "600",
-//         marginBottom: 10,
-//     },
-//     switchRow: {
-//         flexDirection: "row",
-//         justifyContent: "space-between",
-//         alignItems: "center",
-//         marginBottom: 10,
-//     },
-//     switchText: {
-//         fontSize: 16,
-//     },
-//     inputContainer: {
-//         borderWidth: 1,
-//         borderColor: "#ccc",
-//         borderRadius: 5,
-//         padding: 10,
-//         marginBottom: 10,
-//     },
-//     input: {
-//         fontSize: 16,
-//     },
-//     button: {
-//         backgroundColor: "#fe5166",
-//         padding: 15,
-//         borderRadius: 5,
-//         alignItems: "center",
-//         marginBottom: 10,
-//     },
-//     buttonText: {
-//         color: "#fff",
-//         fontSize: 16,
-//         fontWeight: "600",
-//     },
-// });
-
-// export { Settings };
-
 import React, { useState } from "react";
 import {
   View,
@@ -140,6 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
+import { launchImageLibrary } from 'react-native-image-picker';
 
 function Settings() {
     const [notificationsEnabled, setNotificationsEnabled] = useState(false);
@@ -169,7 +38,7 @@ function Settings() {
         tidiness: '',
         sleepingSchedule: '',
         bio: '',
-        profilePicture: '' // Assuming this would be an URI
+        profilePictures: [] // Assuming this would be an URI
     });
 
     const toggleSwitch = () => setNotificationsEnabled(previousState => !previousState);
@@ -190,9 +59,42 @@ function Settings() {
         setRenterInfo({ ...renterInfo, [name]: value });
     };
 
+    const pickImage = async () => {
+        const result = await launchImageLibrary({
+            mediaType: 'photo',
+            quality: 1,
+        });
+    
+        if (result.assets && result.assets.length > 0) {
+            const uri = result.assets[0].uri;
+            if (uri) {
+                setHomeInfo({ ...homeInfo, images: [...homeInfo.images, uri] });
+            }
+        }
+    };
+
+    const ImagesDisplay = () => {
+        if (homeInfo.images.length === 0) {
+            return <Text>No images yet :(</Text>;
+        }
+    
+        return homeInfo.images.map((imageUri, index) => (
+            <View key={index} style={styles.imageContainer}>
+                <Image source={{ uri: imageUri }} style={styles.image} />
+            </View>
+        ));
+    };
+
     const HomeownerForm = () => (
         <>
             {/* Include other fields like price, bedrooms, bathrooms, etc. */}
+            <View style={styles.imagesSection}>
+                <Text style={styles.sectionTitle}>Home Images:</Text>
+                <ImagesDisplay />
+                <TouchableOpacity style={styles.button} onPress={pickImage}>
+                    <Text style={styles.buttonText}>Add Image</Text>
+                </TouchableOpacity>
+            </View>
             <View style={styles.inputContainer}>
                 <Text>Address:</Text>
                 <TextInput
@@ -373,6 +275,21 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "600",
     },
+    imagesSection: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        marginBottom: 10,
+    },
+    imageContainer: {
+        width: '30%', // Adjust the size as needed
+        aspectRatio: 1, // Keep the aspect ratio of the images
+        marginBottom: 10,
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+    }
 });
 
 export { Settings };
