@@ -1,34 +1,47 @@
-import React from "react";
-import { StyleSheet, View, Text, TouchableHighlight,TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
+import RenterInfo from "./RenterInfo";
+import HomeOwnerInfo from "./HomeOwnerInfo";
 
 function AreYouARenterOrOwner() {
+  const [showRenterInfo, setShowRenterInfo] = useState(false);
+  const[showHomeOwnerInfo, setShowHomeOwnerinfo]= useState(false);
+
   const handleOwnerPress = () => {
     console.log("I am Home Owner Button pressed");
+    // Add logic if needed for the Home Owner button press
+    setShowHomeOwnerinfo(true);
   };
 
   const handleRenterPress = () => {
     console.log("I am a Renter button pressed.");
+    // Set showRenterInfo to true when the Renter button is pressed
+    setShowRenterInfo(true);
   };
 
   return (
     <View style={styles.container}>
-       
+      {!showRenterInfo && !showHomeOwnerInfo && (
+        <>
+          <TouchableHighlight
+            style={styles.button}
+            underlayColor="rgba(255, 255, 255, 0.5)"
+            onPress={handleOwnerPress}
+          >
+            <Text style={styles.buttonText}>I am a Home Owner</Text>
+          </TouchableHighlight>
 
-      <TouchableHighlight
-        style={styles.button}
-        underlayColor="rgba(255, 255, 255, 0.5)"
-        onPress={handleOwnerPress}
-      >
-        <Text style={styles.buttonText}>I am a Home Owner</Text>
-      </TouchableHighlight>
-
-      <TouchableHighlight
-        style={styles.button}
-        underlayColor="rgba(255, 255, 255, 0.5)"
-        onPress={handleRenterPress}
-      >
-        <Text style={styles.buttonText}>I am a Renter</Text>
-      </TouchableHighlight>
+          <TouchableHighlight
+            style={styles.button}
+            underlayColor="rgba(255, 255, 255, 0.5)"
+            onPress={handleRenterPress}
+          >
+            <Text style={styles.buttonText}>I am a Renter</Text>
+          </TouchableHighlight>
+        </>
+      )}
+      {showRenterInfo && <RenterInfo />}
+      {showHomeOwnerInfo && <HomeOwnerInfo />}
     </View>
   );
 }
@@ -39,7 +52,7 @@ const styles = StyleSheet.create({
     backgroundColor: "",
     padding: 60,
     alignItems: "center",
-    justifyContent:"center"
+    justifyContent: "center",
   },
   button: {
     backgroundColor: "purple",
@@ -55,7 +68,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-
-
 
 export default AreYouARenterOrOwner;
