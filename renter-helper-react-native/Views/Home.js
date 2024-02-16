@@ -113,7 +113,7 @@ const scaleFontSize = (size) => {
 const cardMargin = 10;
 const { width, height } = Dimensions.get('window');
 const cardWidth = width - (cardMargin * 2); // Width with margin taken into account
-const cardHeight = height * 0.6; // Adjust this value to change the card's height based on the screen size
+const cardHeight = height * 0.8; // Adjust this value to change the card's height based on the screen size
 
 // const cardHeight = 550;
 
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
         borderColor: '#E8E8E8',
         backgroundColor: 'white',
         margin: cardMargin,
-        justifyContent: 'center',
+        justifyContent: 'center top',
         width: cardWidth,
         height: cardHeight,
         alignSelf: 'center', // Ensure the card is centered horizontally
@@ -158,13 +158,13 @@ const styles = StyleSheet.create({
         resizeMode: 'cover', // or 'contain' based on your preference
     },
     address: {
-        fontSize: 24,
+        fontSize: scaleFontSize(24), // Use scale function for font size
         fontWeight: 'bold',
         marginVertical: 5,
         paddingHorizontal: '5%',
     },
     price: {
-        fontSize: 20,
+        fontSize: scaleFontSize(20), // Use scale function for font size
         fontWeight: '600',
         marginVertical: 5,
         paddingHorizontal: '5%',
@@ -177,15 +177,15 @@ const styles = StyleSheet.create({
         marginVertical: 5,
     },
     detailsText: {
-        fontSize: 16,
+        fontSize: scaleFontSize(16),
     },
     availability: {
-        fontSize: 16,
+        fontSize: scaleFontSize(16),
         paddingHorizontal: '5%',
         alignSelf: "left"
     },
     leaseLength: {
-        fontSize: 16,
+        fontSize: scaleFontSize(16),
         paddingHorizontal: '5%',
         alignSelf: "right"
     },
