@@ -133,13 +133,12 @@ const styles = StyleSheet.create({
         flex: 0,
         borderRadius: 10,
         borderWidth: 1,
-        // height: cardHeight,
         borderColor: '#E8E8E8',
         backgroundColor: 'white',
-        margin: cardMargin/2,
-        // marginBottom: cardMargin, // Adding a bit more space at the bottom
+        margin: cardMargin / 2,
         justifyContent: 'center',
-        width: "100%"
+        width: width - (cardMargin * 2), // Subtract the margin from the window's width
+        alignSelf: 'center', // Ensure the card is centered horizontally
     },
     image: {
         width: '100%', // Take full width of the card
@@ -163,7 +162,7 @@ const styles = StyleSheet.create({
     detailsRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: '90%', // Use percentage for responsiveness
+        paddingHorizontal: '5%', // Adjusted for padding instead of width
         alignSelf: 'center',
         marginVertical: 5,
     },
@@ -183,8 +182,9 @@ const styles = StyleSheet.create({
     actionIconsContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        widht: "100%",
+        width: '100%', // Corrected typo from 'widht' to 'width'
         padding: 10, // Add padding if necessary
+        alignSelf: 'center', // Ensure this is centered within the card
     },
 });
 
