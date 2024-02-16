@@ -5,20 +5,6 @@ const Status = {
     Success: 1,
 }
 
-class HomeOwner {
-    constructor(address, price, bedrooms, bathrooms, petPolicy, smokingPolicy, availability, leaseLength, imageUrl) {
-        this.address = address;
-        this.price = price;
-        this.bedrooms = bedrooms;
-        this.bathrooms = bathrooms;
-        this.petPolicy = petPolicy;
-        this.smokingPolicy = smokingPolicy;
-        this.availability = availability;
-        this.leaseLength = leaseLength;
-        this.imageUrl = imageUrl;
-    }
-}
-
 /**
  * 
  * @param {string} user_id 

@@ -1,6 +1,6 @@
 import "firebase/database";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { getFirestore, collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { initializeApp } from 'firebase/app';
 
 const firebaseConfig = {
@@ -15,10 +15,10 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-const getCollections = async () => {
+export const getCollections = async () => {
     try {
         const db = getFirestore(app);
-        const querySnapshot = await getDocs(collection(db, "Renter"));
+        const querySnapshot = await getDocs(collection(db, "Home"));
         querySnapshot.forEach((doc) => {
             console.log(`${doc.id} => ${doc.data()}`);
         });
@@ -61,6 +61,20 @@ export function sign_in_with(email, password) {
         });
 }
 
+export async function get_test_home() {
+    const db = getFirestore(app);
+    const docRef = doc(db, "Home", "test");
+    const docSnap = await getDoc(docRef);
+    
+    if (docSnap.exists()) {
+        const d = docSnap.data();
+        return d;
+    } else {
+        console.log("No such document!");
+        return null; // Return null or some other value to indicate document doesn't exist
+    }
+}
 
 
-export default { getCollections, create_user_with, sign_in_with };
+
+export default { getCollections, create_user_with, sign_in_with, get_test_home };
