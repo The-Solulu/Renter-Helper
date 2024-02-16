@@ -5,6 +5,7 @@ import Swiper from 'react-native-deck-swiper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+
 // You can put your data here
 
 const rentalData = [
@@ -104,9 +105,17 @@ function Home() {
 
 
 // Constants for styling
-const { width, height } = Dimensions.get('window');
-const cardHeight = 550;
+const scaleFontSize = (size) => {
+    const scaleFactor = width / 320; // Assuming 320 is the baseline width of design
+    return size * scaleFactor;
+};
+
 const cardMargin = 10;
+const { width, height } = Dimensions.get('window');
+const cardWidth = width - (cardMargin * 2); // Width with margin taken into account
+const cardHeight = height * 0.6; // Adjust this value to change the card's height based on the screen size
+
+// const cardHeight = 550;
 
 // StyleSheet
 const styles = StyleSheet.create({
@@ -135,9 +144,10 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#E8E8E8',
         backgroundColor: 'white',
-        margin: cardMargin / 2,
+        margin: cardMargin,
         justifyContent: 'center',
-        width: width - (cardMargin * 2), // Subtract the margin from the window's width
+        width: cardWidth,
+        height: cardHeight,
         alignSelf: 'center', // Ensure the card is centered horizontally
     },
     image: {
@@ -162,7 +172,7 @@ const styles = StyleSheet.create({
     detailsRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingHorizontal: '5%', // Adjusted for padding instead of width
+        width: '90%', // Use percentage for responsiveness
         alignSelf: 'center',
         marginVertical: 5,
     },
@@ -182,9 +192,8 @@ const styles = StyleSheet.create({
     actionIconsContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: '100%', // Corrected typo from 'widht' to 'width'
+        widht: "100%",
         padding: 10, // Add padding if necessary
-        alignSelf: 'center', // Ensure this is centered within the card
     },
 });
 
