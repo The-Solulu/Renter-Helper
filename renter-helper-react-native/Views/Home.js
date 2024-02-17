@@ -86,7 +86,6 @@ function Home() {
                 </Text>
             ) : (
                 <Swiper
-                    containerStyle={styles.swiperContainer}
                     cards={rentalData}
                     renderCard={(card) => <RentalCard card={card} />}
                     onSwipedLeft={onSwipedLeft}
@@ -148,7 +147,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center top',
         width: cardWidth,
         height: cardHeight,
-        alignSelf: 'center', // Ensure the card is centered horizontally
     },
     image: {
         width: '100%', // Take full width of the card
@@ -173,7 +171,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '90%', // Use percentage for responsiveness
-        alignSelf: 'center',
         marginVertical: 5,
     },
     detailsText: {
@@ -182,12 +179,10 @@ const styles = StyleSheet.create({
     availability: {
         fontSize: scaleFontSize(16),
         paddingHorizontal: '5%',
-        alignSelf: "left"
     },
     leaseLength: {
         fontSize: scaleFontSize(16),
         paddingHorizontal: '5%',
-        alignSelf: "right"
     },
     actionIconsContainer: {
         flexDirection: 'row',

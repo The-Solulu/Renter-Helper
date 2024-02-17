@@ -68,6 +68,21 @@ export async function get_test_home() {
 
     if (docSnap.exists()) {
         const d = docSnap.data();
+        console.log(d);
+        return d;
+    } else {
+        console.log("No such document!");
+        return null; // Return null or some other value to indicate document doesn't exist
+    }
+}
+
+export async function get_test_person() {
+    const db = getFirestore(app);
+    const docRef = doc(db, "Renter", "Test");
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        const d = docSnap.data();
         return d;
     } else {
         console.log("No such document!");
