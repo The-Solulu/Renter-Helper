@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button,View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {get_test_person} from '../Backend/firebase.js';
 
 // Your rental data
 var rentalData = [
@@ -68,6 +69,9 @@ function RentalCard({ card }) {
 
 // Main people component
 function People() {
+  get_test_person().then((data) => {
+    console.log(data.bed_time);
+  });
   const [allSwiped, setAllSwiped] = useState(false);
 
   const onSwipedAll = () => {

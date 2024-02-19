@@ -90,7 +90,7 @@ export async function get_test_person() {
     }
 }
 
-const test_home = {
+export const test_home = {
     address: '999 Mission St',
     price: 5000,
     bedrooms: 4,
@@ -100,6 +100,7 @@ const test_home = {
     availability: Date.now(),
     leaseLength: '12-Month Lease',
     imageUri: 'https://reactjs.org/logo-og.png',
+    conversations: [],
 };
 
 export async function new_home(home) {
@@ -107,7 +108,7 @@ export async function new_home(home) {
     const docRef = await addDoc(collection(db, "Home"), {
     });
     await setDoc(doc(db, "Home", "docRef.id"), {
-        id : docRef.id,
+        id: docRef.id,
         address: home.address,
         price: home.price,
         bedrooms: home.bedrooms,
@@ -119,7 +120,107 @@ export async function new_home(home) {
         imageUri: home.imageUri,
         liked_users: [],
         disliked_users: [],
+        conversations: [],
     });
+}
+
+export async function get_random_home() {
+    const db = getFirestore(app);
+    const querySnapshot = await getDocs(collection(db, "Home"));
+    const randomIndex = Math.floor(Math.random() * querySnapshot.size);
+    const randomDoc = querySnapshot.docs[randomIndex];
+    return randomDoc.data();
+}
+
+export async function modify_home(home) {
+    const db = getFirestore(app);
+    const docRef = doc(db, "Home", home.id);
+    await setDoc(docRef, {
+        address: home.address,
+        price: home.price,
+        bedrooms: home.bedrooms,
+        bathrooms: home.bathrooms,
+        petPolicy: home.petPolicy,
+        smokingPolicy: home.smokingPolicy,
+        availability: home.availability,
+        leaseLength: home.leaseLength,
+        imageUri: home.imageUri,
+    });
+}
+
+export const test_person = {
+    name: 'Frank',
+    bed_time: '10:30 PM',
+    bio: 'I am a software engineer',
+    disliked_users: [],
+    liked_users: [],
+    guests: 0,
+    imageUri: 'https://reactjs.org/logo-og.png',
+    interests: ['Reading', 'Coding', 'Hiking'],
+    major: 'Computer Science',
+    noise_level: 3,
+    pets: false,
+    pronouns: 'he/him',
+    roommates: 3,
+    smoking: false,
+    wake_time: '6:30 AM',
+    tidiness: 1,
+    conversations: [],
+};
+
+export async function new_person(person) {
+    const db = getFirestore(app);
+    const docRef = await addDoc(collection(db, "Renter"), {
+    });
+    await setDoc(doc(db, "Renter", "docRef.id"), {
+        id: docRef.id,
+        name: person.name,
+        bed_time: person.bed_time,
+        bio: person.bio,
+        disliked_users: [],
+        liked_users: [],
+        guests: person.guests,
+        imageUri: person.imageUri,
+        interests: person.interests,
+        major: person.major,
+        noise_level: person.noise_level,
+        pets: person.pets,
+        pronouns: person.pronouns,
+        roommates: person.roommates,
+        smoking: person.smoking,
+        wake_time: person.wake_time,
+        tidiness: person.tidiness,
+        conversations: [],
+    });
+}
+
+export async function modify_person(person) {
+    const db = getFirestore(app);
+    const docRef = doc(db, "Renter", person.id);
+    await setDoc(docRef, {
+        name: person.name,
+        bed_time: person.bed_time,
+        bio: person.bio,
+        guests: person.guests,
+        imageUri: person.imageUri,
+        interests: person.interests,
+        major: person.major,
+        noise_level: person.noise_level,
+        pets: person.pets,
+        pronouns: person.pronouns,
+        roommates: person.roommates,
+        smoking: person.smoking,
+        wake_time: person.wake_time,
+        tidiness: person.tidiness
+    });
+}
+
+export async function get_random_person() {
+    const db = getFirestore(app);
+    const querySnapshot = await getDocs(collection(db, "Renter"));
+    const randomIndex = Math.floor(Math.random() * querySnapshot.size);
+    const randomDoc = querySnapshot.docs[randomIndex];
+    return randomDoc.data();
 }
 
 export async function like(id, liked_user_id) {
@@ -138,4 +239,52 @@ export async function dislike(id, disliked_user_id) {
     });
 }
 
-export default { getCollections, create_user_with, sign_in_with, get_test_home };
+async function add_conversation_to_user(user_id, user_type, conversation_id) {
+    const db = getFirestore(app);
+    const docRef = doc(db, user_type, user_id);
+    await updateDoc(docRef, {
+        "conversations": arrayUnion(conversation_id),
+    });
+}
+
+export async function new_conversation(user1_id, user1_type, user2_id, user2_type) {
+    const db = getFirestore(app);
+    const converstion_ref = await addDoc(collection(db, "Conversations"));
+    add_conversation_to_user(user1_id, user1_type, converstion_ref.id);
+    add_conversation_to_user(user2_id, user2_type, converstion_ref.id);
+    return converstion_ref.id; 
+}
+
+export async function send_message(conversation_id, message) {
+    const db = getFirestore(app);
+    const docRef = await addDoc(collection(db, `Conversations/${conversation_id}/messages`), {
+        message: message,
+        time: Date.now(),
+        user_id: user_id,
+        user_tyype: user_type,
+    });
+}
+
+function compare_messages(a, b) {
+    if (a.time < b.time) {
+        return -1;
+    }
+    if (a.time > b.time) {
+        return 1;
+    }
+    return 0;
+}
+
+export async function get_conversation(conversation_id){
+    const db = getFirestore(app);
+    const querySnapshot = await getDocs(collection(db, `Conversations/${conversation_id}/messages`));
+    var messages = [];
+
+    querySnapshot.forEach((doc) => {
+        messages.append(doc.data());
+    });
+
+    messages.sort(compare_messages);
+    
+    return messages;
+}
