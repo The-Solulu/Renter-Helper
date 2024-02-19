@@ -20,5 +20,12 @@ export async function save_user(user_id) {
 }
 
 export async function get_user() {
-
+    try {
+        const value = await AsyncStorage.getItem('user_id');
+        if (value !== null) {
+            return value;
+        }
+    } catch (e) {
+        return null;
+    }
 }

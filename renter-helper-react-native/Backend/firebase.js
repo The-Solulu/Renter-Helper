@@ -15,6 +15,9 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
+/**
+ * Get all the collections in the database
+ */
 export const getCollections = async () => {
     try {
         const db = getFirestore(app);
@@ -27,7 +30,11 @@ export const getCollections = async () => {
     }
 };
 
-// Documentation: https://firebase.google.com/docs/auth/web/password-auth?hl=en&authuser=0
+/**
+ * Create a new user with the given email and password
+ * @param {*} email Email of the user
+ * @param {*} password Password of the user
+ */
 export function create_user_with(email, password) {
     const auth = getAuth(app);
 
@@ -45,6 +52,11 @@ export function create_user_with(email, password) {
         });
 }
 
+/**
+ * Sign in with the given email and password
+ * @param {*} email 
+ * @param {*} password 
+ */
 export function sign_in_with(email, password) {
     const auth = getAuth(app);
     signInWithEmailAndPassword(auth, email, password)
@@ -61,6 +73,10 @@ export function sign_in_with(email, password) {
         });
 }
 
+/**
+ * Get a test home object from the database
+ * @returns Home object
+ */
 export async function get_test_home() {
     const db = getFirestore(app);
     const docRef = doc(db, "Home", "test");
@@ -76,6 +92,10 @@ export async function get_test_home() {
     }
 }
 
+/**
+ * Get a test person object from the database
+ * @returns Person object
+ */
 export async function get_test_person() {
     const db = getFirestore(app);
     const docRef = doc(db, "Renter", "Test");
@@ -90,6 +110,7 @@ export async function get_test_person() {
     }
 }
 
+// Example of home object structure
 export const test_home = {
     address: '999 Mission St',
     price: 5000,
@@ -103,6 +124,10 @@ export const test_home = {
     conversations: [],
 };
 
+/**
+ * Create a new home object in the database
+ * @param {*} home 
+ */
 export async function new_home(home) {
     const db = getFirestore(app);
     const docRef = await addDoc(collection(db, "Home"), {
@@ -124,6 +149,10 @@ export async function new_home(home) {
     });
 }
 
+/**
+ * Get a random home object from the database
+ * @returns {Promise<Home>}
+ */
 export async function get_random_home() {
     const db = getFirestore(app);
     const querySnapshot = await getDocs(collection(db, "Home"));
@@ -132,6 +161,10 @@ export async function get_random_home() {
     return randomDoc.data();
 }
 
+/**
+ * Edit the given home object in the database
+ * @param {*} home 
+ */
 export async function modify_home(home) {
     const db = getFirestore(app);
     const docRef = doc(db, "Home", home.id);
@@ -148,6 +181,7 @@ export async function modify_home(home) {
     });
 }
 
+// Example of person object structure
 export const test_person = {
     name: 'Frank',
     bed_time: '10:30 PM',
@@ -168,6 +202,10 @@ export const test_person = {
     conversations: [],
 };
 
+/**
+ * Create a new person object in the database
+ * @param {*} person 
+ */
 export async function new_person(person) {
     const db = getFirestore(app);
     const docRef = await addDoc(collection(db, "Renter"), {
@@ -194,6 +232,10 @@ export async function new_person(person) {
     });
 }
 
+/**
+ * Edit the given person object in the database
+ * @param {*} person 
+ */
 export async function modify_person(person) {
     const db = getFirestore(app);
     const docRef = doc(db, "Renter", person.id);
@@ -215,6 +257,10 @@ export async function modify_person(person) {
     });
 }
 
+/**
+ * Get a random person object from the database
+ * @returns {Promise<Person>}
+ */
 export async function get_random_person() {
     const db = getFirestore(app);
     const querySnapshot = await getDocs(collection(db, "Renter"));
@@ -223,22 +269,40 @@ export async function get_random_person() {
     return randomDoc.data();
 }
 
-export async function like(id, liked_user_id) {
+/**
+ * Like a user
+ * @param {*} id user id
+ * @param {*} primary_user_type user type of the person liking, can be "Renter" or "Home"
+ * @param {*} liked_user_id user id of the person being liked
+ */
+export async function like(id, primary_user_type, liked_user_id) {
     const db = getFirestore(app);
-    const docRef = doc(db, "Home", id);
+    const docRef = doc(db, primary_user_type, id);
     await updateDoc(frankDocRef, {
         "liked_users": arrayUnion(liked_user_id),
     });
 }
 
-export async function dislike(id, disliked_user_id) {
+/**
+ * Dislike a user
+ * @param {*} id user id
+ * @param {*} primary_user_type user type of the person disliking, can be "Renter" or "Home"
+ * @param {*} disliked_user_id user id of the person being disliked
+ */
+export async function dislike(id, primary_user_type, disliked_user_id) {
     const db = getFirestore(app);
-    const docRef = doc(db, "Home", id);
+    const docRef = doc(db, primary_user_type, id);
     await updateDoc(frankDocRef, {
         "disliked_users": arrayUnion(disliked_user_id),
     });
 }
 
+/**
+ * link a conversation to a user
+ * @param {*} user_id user id
+ * @param {*} user_type user type of the person, can be "Renter" or "Home"
+ * @param {*} conversation_id document id of the conversation
+ */
 async function add_conversation_to_user(user_id, user_type, conversation_id) {
     const db = getFirestore(app);
     const docRef = doc(db, user_type, user_id);
@@ -247,24 +311,45 @@ async function add_conversation_to_user(user_id, user_type, conversation_id) {
     });
 }
 
+/**
+ * create a new conversation between two users. This function will also link the conversation to the users.
+ * @param {\} user1_id user id of the first user
+ * @param {*} user1_type user type of the first user can be "Renter" or "Home"
+ * @param {*} user2_id user id of the second user
+ * @param {*} user2_type user type of the second user can be "Renter" or "Home"
+ * @returns conversation id
+ */
 export async function new_conversation(user1_id, user1_type, user2_id, user2_type) {
     const db = getFirestore(app);
     const converstion_ref = await addDoc(collection(db, "Conversations"));
     add_conversation_to_user(user1_id, user1_type, converstion_ref.id);
     add_conversation_to_user(user2_id, user2_type, converstion_ref.id);
-    return converstion_ref.id; 
+    return converstion_ref.id;
 }
 
-export async function send_message(conversation_id, message) {
+/**
+ * send a message to a conversation
+ * @param {*} conversation_id conversation id
+ * @param {*} message the message to be sent
+ * @param {*} author_id user id of the author
+ * @param {*} author_type user type of the author can be "Renter" or "Home"
+ */
+export async function send_message(conversation_id, message, author_id, author_type) {
     const db = getFirestore(app);
     const docRef = await addDoc(collection(db, `Conversations/${conversation_id}/messages`), {
         message: message,
         time: Date.now(),
-        user_id: user_id,
-        user_tyype: user_type,
+        user_id: author_id,
+        user_type: author_type,
     });
 }
 
+/**
+ * Compare two messages based on their time
+ * @param {*} a message a
+ * @param {*} b message b
+ * @returns 1 if message a is newer, -1 if message b is newer, 0 if they are the same
+ */
 function compare_messages(a, b) {
     if (a.time < b.time) {
         return -1;
@@ -275,7 +360,12 @@ function compare_messages(a, b) {
     return 0;
 }
 
-export async function get_conversation(conversation_id){
+/**
+ * Get the conversation for the given conversation id
+ * @param {*} conversation_id conversation id
+ * @returns array of messages
+ */
+export async function get_conversation(conversation_id) {
     const db = getFirestore(app);
     const querySnapshot = await getDocs(collection(db, `Conversations/${conversation_id}/messages`));
     var messages = [];
@@ -285,6 +375,23 @@ export async function get_conversation(conversation_id){
     });
 
     messages.sort(compare_messages);
-    
+
     return messages;
+}
+
+/**
+ * Save the user id to firebase
+ * @param {*} image image to be uploaded
+ * @param {*} user_id user id of the user
+ * @returns url of the uploaded image
+ */
+export function upload_image(image, user_id) {
+    const storage = getStorage(app);
+    const storageRef = ref(storage, `images/${user_id}`);
+    uploadBytes(storageRef, image)
+        .then((snapshot) => {
+            console.log('Uploaded a blob or file!');
+        });
+    const url = getDownloadURL(storageRef);
+    return url;
 }
