@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
+import { Button,View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {get_test_person} from '../Backend/firebase.js';
 
 // Your rental data
-const rentalData = [
+var rentalData = [
   {
     name: 'First and Last Name',
     interests: 'Reading, cleaning',
@@ -15,6 +16,26 @@ const rentalData = [
     leaseLength: '12-Month Lease',
     imageUri: 'https://t4.ftcdn.net/jpg/03/83/25/83/360_F_383258331_D8imaEMl8Q3lf7EKU2Pi78Cn0R7KkW9o.jpg',
   },
+  {
+    name: 'First and Last Name',
+    interests: 'Reading, cleaning',
+    clean: 'Clean',
+    petPolicy: 'Pet Allowed',
+    smokingPolicy: 'No Smoking',
+    availability: 'Available 7/18',
+    leaseLength: '12-Month Lease',
+    imageUri: 'https://t4.ftcdn.net/jpg/03/83/25/83/360_F_383258331_D8imaEMl8Q3lf7EKU2Pi78Cn0R7KkW9o.jpg',
+  },
+  {
+    name: 'First and Last Name',
+    interests: 'Reading, cleaning',
+    clean: 'Clean',
+    petPolicy: 'Pet Allowed',
+    smokingPolicy: 'No Smoking',
+    availability: 'Available 7/18',
+    leaseLength: '12-Month Lease',
+    imageUri: 'https://t4.ftcdn.net/jpg/03/83/25/83/360_F_383258331_D8imaEMl8Q3lf7EKU2Pi78Cn0R7KkW9o.jpg',
+  }
 ];
 
 // Rental card component
@@ -48,6 +69,9 @@ function RentalCard({ card }) {
 
 // Main people component
 function People() {
+  get_test_person().then((data) => {
+    console.log(data.bed_time);
+  });
   const [allSwiped, setAllSwiped] = useState(false);
 
   const onSwipedAll = () => {
@@ -63,7 +87,6 @@ function People() {
         </Text>
       ) : (
         <Swiper
-          containerStyle={styles.swiperContainer}
           cards={rentalData}
           renderCard={(card) => <RentalCard card={card} />}
           onSwipedAll={onSwipedAll}
