@@ -182,6 +182,25 @@ export async function modify_home(home) {
     });
 }
 
+/**
+ * Get the home object with the given id
+ * @param {*} id user id of the home
+ * @returns home object
+ */
+export async function get_home(id) {
+    const db = getFirestore(app);
+    const docRef = doc(db, "Home", id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        const d = docSnap.data();
+        return d;
+    } else {
+        console.log("No such document!");
+        return null; // Return null or some other value to indicate document doesn't exist
+    }
+}
+
 // Example of person object structure
 export const test_person = {
     name: 'Frank',
@@ -271,14 +290,13 @@ export async function get_random_person() {
 }
 
 /**
- * 
- * @param {*} id user id
- * @param {*} user_type user type of the person, can be "Renter" or "Home"
- * @returns 
+ * Get the person object with the given id
+ * @param {*} id user id of the person
+ * @returns person object
  */
-export async function get_user(id, user_type) {
+export async function get_person(id) {
     const db = getFirestore(app);
-    const docRef = doc(db, user_type, id);
+    const docRef = doc(db, "Renter", id);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
