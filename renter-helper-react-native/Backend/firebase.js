@@ -294,7 +294,7 @@ export async function get_random_person() {
  * @param {*} id user id of the person
  * @returns person object
  */
-export async function get_person(id) {
+export async function get_renter(id) {
     const db = getFirestore(app);
     const docRef = doc(db, "Renter", id);
     const docSnap = await getDoc(docRef);
@@ -398,6 +398,13 @@ function compare_messages(a, b) {
     }
     return 0;
 }
+
+const test_message = {
+    message: 'Hello', // message content
+    time: Date.now(), // time in milliseconds
+    user_id: 'test', // user id of the author
+    user_type: 'Renter', // can be "Renter" or "Home"
+};
 
 /**
  * Get the conversation for the given conversation id
