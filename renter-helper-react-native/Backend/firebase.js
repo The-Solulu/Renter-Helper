@@ -98,7 +98,8 @@ export async function get_test_home() {
  * @returns Person object
  */
 export async function get_test_person() {
-    const db = getFirestore(app);
+    const db = getFirestore(app, {experimentalForceLongPolling: true});
+    
     const docRef = doc(db, "Renter", "Test");
     const docSnap = await getDoc(docRef);
 
@@ -150,6 +151,28 @@ export async function new_home(home) {
     });
 }
 
+export async function new_home(address, price, bedrooms, bathrooms, petPolicy, smokingPolicy, availability, leaseLength, imageUri) {
+    const db = getFirestore(app);
+    const docRef = await addDoc(collection(db, "Home"), {
+    });
+    await setDoc(doc(db, "Home", "docRef.id"), {
+        id: docRef.id,
+        address: address,
+        price: price,
+        bedrooms: bedrooms,
+        bathrooms: bathrooms,
+        petPolicy: petPolicy,
+        smokingPolicy: smokingPolicy,
+        availability: availability,
+        leaseLength: leaseLength,
+        imageUri: imageUri,
+        liked_users: [],
+        disliked_users: [],
+        conversations: [],
+    });
+
+}
+
 /**
  * Get a random home object from the database
  * @returns {Promise<Home>}
@@ -180,6 +203,25 @@ export async function modify_home(home) {
         leaseLength: home.leaseLength,
         imageUri: home.imageUri,
     });
+}
+
+/**
+ * Get the home object with the given id
+ * @param {*} id user id of the home
+ * @returns home object
+ */
+export async function get_home(id) {
+    const db = getFirestore(app);
+    const docRef = doc(db, "Home", id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        const d = docSnap.data();
+        return d;
+    } else {
+        console.log("No such document!");
+        return null; // Return null or some other value to indicate document doesn't exist
+    }
 }
 
 // Example of person object structure
@@ -233,6 +275,33 @@ export async function new_person(person) {
     });
 }
 
+export async function new_person(name, bed_time, bio, guests, imageUri, interests, major, noise_level, pets, pronouns, roommates, smoking, wake_time, tidiness) {
+    const db = getFirestore(app);
+    const docRef = await addDoc(collection(db, "Renter"), {
+    });
+    await setDoc(doc(db, "Renter", "docRef.id"), {
+        id: docRef.id,
+        name: name,
+        bed_time: bed_time,
+        bio: bio,
+        disliked_users: [],
+        liked_users: [],
+        guests: guests,
+        imageUri: imageUri,
+        interests: interests,
+        major: major,
+        noise_level: noise_level,
+        pets: pets,
+        pronouns: pronouns,
+        roommates: roommates,
+        smoking: smoking,
+        wake_time: wake_time,
+        tidiness: tidiness,
+        conversations: [],
+    });
+
+}
+
 /**
  * Edit the given person object in the database
  * @param {*} person 
@@ -268,6 +337,39 @@ export async function get_random_person() {
     const randomIndex = Math.floor(Math.random() * querySnapshot.size);
     const randomDoc = querySnapshot.docs[randomIndex];
     return randomDoc.data();
+}
+
+/**
+ * Get the person object with the given id
+ * @param {*} id user id of the person
+ * @returns person object
+ */
+export async function get_renter(id) {
+    const db = getFirestore(app);
+    const docRef = doc(db, "Renter", id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        const d = docSnap.data();
+        return d;
+    } else {
+        console.log("No such document!");
+        return null; // Return null or some other value to indicate document doesn't exist
+    }
+}
+
+export async function get_user(id, user_type) {
+    const db = getFirestore(app);
+    const docRef = doc(db, user_type, id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        const d = docSnap.data();
+        return d;
+    } else {
+        console.log("No such document!");
+        return null; // Return null or some other value to indicate document doesn't exist
+    }
 }
 
 /**
@@ -361,6 +463,13 @@ function compare_messages(a, b) {
     return 0;
 }
 
+const test_message = {
+    message: 'Hello', // message content
+    time: Date.now(), // time in milliseconds
+    user_id: 'test', // user id of the author
+    user_type: 'Renter', // can be "Renter" or "Home"
+};
+
 /**
  * Get the conversation for the given conversation id
  * @param {*} conversation_id conversation id
@@ -372,7 +481,7 @@ export async function get_conversation(conversation_id) {
     var messages = [];
 
     querySnapshot.forEach((doc) => {
-        messages.append(doc.data());
+        messages.push(doc.data());
     });
 
     messages.sort(compare_messages);
