@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
-import {useWindowDimensions} from 'react-native';
+import { useWindowDimensions } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import { get_test_home } from "../Backend/firebase.js"
+import { set } from 'firebase/database';
 
 // You can put your data here
 
@@ -56,12 +57,36 @@ function RentalCard({ card }) {
     );
 }
 
+function get_new_card() {
+    get_test_home().then((res) => {
+        const new_home =
+        {
+            address: res.address,
+            price: res.price,
+            bedrooms: res.bedrooms,
+            bathrooms: res.bathrooms,
+            petPolicy: 'Pet Allowed',
+            smokingPolicy: 'No Smoking',
+            availability: 'Available 7/18',
+            leaseLength: '12-Month Lease',
+            imageUri: 'https://reactjs.org/logo-og.png',
+        }
+
+        rentalData.push(new_home)
+    })
+}
+
 // Main home component
 function Home() {
+
     const [index, setIndex] = useState(0);
     const [likedCards, setLikedCards] = useState([]);
     const [rejectedCards, setRejectedCards] = useState([]);
-    const [allSwiped, setAllSwiped] = useState(false);
+    const [allSwiped, setAllSwiped] = useState(true);
+
+    // get_new_card().then(() => {
+    //     setAllSwiped(false);
+    // })
 
     const onSwipedLeft = (cardIndex) => {
         setRejectedCards([...rejectedCards, cardIndex]);
@@ -123,7 +148,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         textAlign: 'center',
-        marginTop: cardHeight/3,
+        marginTop: cardHeight / 3,
     },
     // swiperContainer: {
     //     flex: 1,
