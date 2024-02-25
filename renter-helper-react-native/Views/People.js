@@ -70,7 +70,7 @@ function RentalCard({ card }) {
 // Main people component
 function People() {
   get_test_person().then((data) => {
-    console.log(data.bed_time);
+    console.log(data);
   });
   const [allSwiped, setAllSwiped] = useState(false);
 
