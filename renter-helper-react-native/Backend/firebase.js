@@ -98,7 +98,8 @@ export async function get_test_home() {
  * @returns Person object
  */
 export async function get_test_person() {
-    const db = getFirestore(app);
+    const db = getFirestore(app, {experimentalForceLongPolling: true});
+    
     const docRef = doc(db, "Renter", "Test");
     const docSnap = await getDoc(docRef);
 

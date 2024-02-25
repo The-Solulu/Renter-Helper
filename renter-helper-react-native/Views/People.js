@@ -72,6 +72,7 @@ function People() {
   get_test_person().then((data) => {
     console.log(data);
   });
+  
   const [allSwiped, setAllSwiped] = useState(false);
 
   const onSwipedAll = () => {
