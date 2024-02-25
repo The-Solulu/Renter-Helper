@@ -7,8 +7,8 @@ import { get_test_home } from "../Backend/firebase.js";
 
 const { width, height } = Dimensions.get('window');
 const cardMargin = 10;
-const cardWidth = width - (cardMargin * 2);
-const cardHeight = height * 0.8;
+const cardWidth = width - (cardMargin * 5);
+const cardHeight = height * 0.7;
 
 function RentalCard({ card }) {
     const availabilityDate = card.availability?.toDate().toLocaleDateString("en-US");
@@ -33,8 +33,8 @@ function RentalCard({ card }) {
                 <Text style={styles.detailsText}>{smokingPolicyText}</Text>
             </View>
             <View style={styles.detailsRow}>
-                <Text style={styles.availability}>{availabilityDate}</Text>
-                <Text style={styles.leaseLength}>{card.leaseLength}</Text>
+                <Text style={styles.availability}>Date: {availabilityDate}</Text>
+                <Text style={styles.leaseLength}>Lease: {card.leaseLength}</Text>
             </View>
             <View style={styles.actionIconsContainer}>
                 <MaterialCommunityIcons name="close" size={34} color="red" />
