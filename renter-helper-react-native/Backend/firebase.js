@@ -151,6 +151,28 @@ export async function new_home(home) {
     });
 }
 
+export async function new_home(address, price, bedrooms, bathrooms, petPolicy, smokingPolicy, availability, leaseLength, imageUri) {
+    const db = getFirestore(app);
+    const docRef = await addDoc(collection(db, "Home"), {
+    });
+    await setDoc(doc(db, "Home", "docRef.id"), {
+        id: docRef.id,
+        address: address,
+        price: price,
+        bedrooms: bedrooms,
+        bathrooms: bathrooms,
+        petPolicy: petPolicy,
+        smokingPolicy: smokingPolicy,
+        availability: availability,
+        leaseLength: leaseLength,
+        imageUri: imageUri,
+        liked_users: [],
+        disliked_users: [],
+        conversations: [],
+    });
+
+}
+
 /**
  * Get a random home object from the database
  * @returns {Promise<Home>}
@@ -251,6 +273,33 @@ export async function new_person(person) {
         tidiness: person.tidiness,
         conversations: [],
     });
+}
+
+export async function new_person(name, bed_time, bio, guests, imageUri, interests, major, noise_level, pets, pronouns, roommates, smoking, wake_time, tidiness) {
+    const db = getFirestore(app);
+    const docRef = await addDoc(collection(db, "Renter"), {
+    });
+    await setDoc(doc(db, "Renter", "docRef.id"), {
+        id: docRef.id,
+        name: name,
+        bed_time: bed_time,
+        bio: bio,
+        disliked_users: [],
+        liked_users: [],
+        guests: guests,
+        imageUri: imageUri,
+        interests: interests,
+        major: major,
+        noise_level: noise_level,
+        pets: pets,
+        pronouns: pronouns,
+        roommates: roommates,
+        smoking: smoking,
+        wake_time: wake_time,
+        tidiness: tidiness,
+        conversations: [],
+    });
+
 }
 
 /**
