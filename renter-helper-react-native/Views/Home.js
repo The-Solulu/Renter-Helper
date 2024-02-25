@@ -7,33 +7,34 @@ import { get_test_home } from "../Backend/firebase.js";
 
 const { width, height } = Dimensions.get('window');
 const cardMargin = 10;
-const cardWidth = width - (cardMargin * 2);
-const cardHeight = height * 0.8;
+const cardWidth = width - (cardMargin * 5);
+const cardHeight = height * 0.7;
 
 function RentalCard({ card }) {
-
     const availabilityDate = card.availability?.toDate().toLocaleDateString("en-US");
+    const petPolicyText = card.petPolicy ? "Allowed" : "Unallowed";
+    const smokingPolicyText = card.smokingPolicy ? "Allowed" : "Unallowed";
 
     return (
         <View style={styles.card}>
             <Image style={styles.image} source={{ uri: card.imageUri }} />
             <Text style={styles.address}>{card.address}</Text>
-            <Text style={styles.price}>{card.price}</Text>
+            <Text style={styles.price}>${card.price}</Text>
             <View style={styles.detailsRow}>
                 <MaterialIcons name="bed" size={24} color="black" />
-                <Text style={styles.detailsText}>{card.bedrooms}</Text>
+                <Text style={styles.detailsText}>{card.bedrooms} </Text>
                 <MaterialIcons name="bathtub" size={24} color="black" />
-                <Text style={styles.detailsText}>{card.bathrooms}</Text>
+                <Text style={styles.detailsText}>{card.bathrooms} </Text>
             </View>
             <View style={styles.detailsRow}>
                 <MaterialIcons name="pets" size={24} color="black" />
-                <Text style={styles.detailsText}>{card.petPolicy}</Text>
+                <Text style={styles.detailsText}> {petPolicyText}</Text>
                 <MaterialIcons name="smoke-free" size={24} color="black" />
-                <Text style={styles.detailsText}>{card.smokingPolicy}</Text>
+                <Text style={styles.detailsText}>{smokingPolicyText}</Text>
             </View>
             <View style={styles.detailsRow}>
-                <Text style={styles.availability}>{availabilityDate}</Text>
-                <Text style={styles.leaseLength}>{card.leaseLength}</Text>
+                <Text style={styles.availability}>Date: {availabilityDate}</Text>
+                <Text style={styles.leaseLength}>Lease: {card.leaseLength}</Text>
             </View>
             <View style={styles.actionIconsContainer}>
                 <MaterialCommunityIcons name="close" size={34} color="red" />
@@ -56,26 +57,24 @@ function Home() {
         get_new_card();
     }, []);
 
-    // get_new_card();
-
     function get_new_card() {
-        if (!loading) setLoading(true); // Set loading to true if it's not the initial load
+        setLoading(true);
         get_test_home().then((res) => {
             if (res) {
                 const new_home = {
                     address: res.address,
                     price: res.price,
-                    bedrooms: res.bedrooms,
-                    bathrooms: res.bathrooms,
-                    petPolicy: res.petPolicy,
-                    smokingPolicy: res.smokingPolicy,
+                    bedrooms: res.bedrooms + " bedroom",
+                    bathrooms: res.bathrooms + " bathroom",
+                    petPolicy: res.petPolicy ? "Allowed" : "Unallowed",
+                    smokingPolicy: res.smokingPolicy ? "Allowed" : "Unallowed",
                     availability: res.availability,
                     leaseLength: res.leaseLength,
-                    imageUri: res.imageUri,
+                    imageUri: res.imageUrl, // Note: Changed from imageUri to imageUrl based on your data
                 };
 
                 setRentalData([new_home]);
-                setAllSwiped(false); // Replace the current card with a new one
+                setAllSwiped(false);
             } else {
                 console.log("Data is undefined");
             }
@@ -84,23 +83,8 @@ function Home() {
     }
 
     const onSwiped = (cardIndex) => {
-        get_new_card(); // Fetch a new card after each swipe
-        setSwiperKey(prevKey => prevKey + 1);
-    };
-
-    const onSwipedLeft = (cardIndex) => {
-        setRejectedCards([...rejectedCards, cardIndex]);
-        console.log('Rejected card index:', cardIndex);
-    };
-
-    const onSwipedRight = (cardIndex) => {
-        setLikedCards([...likedCards, cardIndex]);
-        console.log('Liked card index:', cardIndex);
-    };
-
-    const onSwipedAll = () => {
-        console.log('All cards swiped');
-        setAllSwiped(true);
+        get_new_card();
+        setSwiperKey(prevKey => prevKey + 1); // Increment key to force swiper refresh
     };
 
     if (loading) {
@@ -113,7 +97,7 @@ function Home() {
                 <Text style={styles.noMoreCardsText}>No more Available houses in your region 🥲</Text>
             ) : (
                 <Swiper
-                    key={swiperKey} // Use state variable as key
+                    key={swiperKey}
                     containerStyle={styles.swiperContainer}
                     cards={rentalData}
                     renderCard={(card) => <RentalCard card={card} />}
