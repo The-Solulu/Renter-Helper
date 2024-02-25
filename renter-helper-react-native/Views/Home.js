@@ -88,8 +88,6 @@ function Home() {
         setSwiperKey(prevKey => prevKey + 1);
     };
 
-    get_new_card()
-
     const onSwipedLeft = (cardIndex) => {
         setRejectedCards([...rejectedCards, cardIndex]);
         console.log('Rejected card index:', cardIndex);
