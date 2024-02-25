@@ -20,10 +20,10 @@ function AreYouARenterOrOwner() {
   };
 
   return (
-    <View style={styles.container}>
+    <View>
       {!showRenterInfo && !showHomeOwnerInfo && (
-        <>
-          <TouchableHighlight
+        <View style={styles.container}>
+           <TouchableHighlight
             style={styles.button}
             underlayColor="rgba(255, 255, 255, 0.5)"
             onPress={handleOwnerPress}
@@ -38,9 +38,9 @@ function AreYouARenterOrOwner() {
           >
             <Text style={styles.buttonText}>I am a Renter</Text>
           </TouchableHighlight>
-        </>
+        </View>
       )}
-      {showRenterInfo && <RenterInfo />}
+      {showRenterInfo && <RenterInfo/>}
       {showHomeOwnerInfo && <HomeOwnerInfo />}
     </View>
   );

@@ -19,7 +19,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View>
       {!loggedIn ? (
         <>
           <Text style={styles.title}>Login</Text>
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    // padding: 20,
   },
   title: {
     fontSize: 24,
