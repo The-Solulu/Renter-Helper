@@ -309,6 +309,20 @@ export async function get_renter(id) {
     }
 }
 
+export async function get_user(id, user_type) {
+    const db = getFirestore(app);
+    const docRef = doc(db, user_type, id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        const d = docSnap.data();
+        return d;
+    } else {
+        console.log("No such document!");
+        return null; // Return null or some other value to indicate document doesn't exist
+    }
+}
+
 /**
  * Like a user
  * @param {*} id user id
@@ -418,7 +432,7 @@ export async function get_conversation(conversation_id) {
     var messages = [];
 
     querySnapshot.forEach((doc) => {
-        messages.append(doc.data());
+        messages.push(doc.data());
     });
 
     messages.sort(compare_messages);

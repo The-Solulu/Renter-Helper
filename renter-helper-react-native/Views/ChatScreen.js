@@ -4,7 +4,7 @@ import { Bubble, GiftedChat, Send } from "react-native-gifted-chat";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-const ChatScreen = () => {
+function ChatScreen() {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
