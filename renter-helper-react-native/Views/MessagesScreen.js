@@ -1,44 +1,49 @@
-import React from "react";
-import { useState } from 'react';
-import { TextInput, View, Text, Button, StyleSheet, FlatList, } from "react-native";
-import { get_test_person, get_conversation, } from "../Backend/firebase.js";
-import { Container, Card, UserInfo, UserImgWrapper, UserImg, UserInfoText, UserName, PostTime, MessageText, TextSection, } from "../Styles/MessageStyles";
+import React, { useState, useEffect } from "react";
+import { Text, FlatList } from "react-native";
+import {
+  Container,
+  Card,
+  UserInfo,
+  UserImgWrapper,
+  UserImg,
+  UserInfoText,
+  UserName,
+  PostTime,
+  MessageText,
+  TextSection,
+} from "../Styles/MessageStyles";
+import { get_test_person, get_conversation } from "../Backend/firebase.js";
 
 const MessagesScreen = ({ navigation }) => {
-  var Messages = [
-    {
-      id: "1",
-      userName: "Jenny Doe",
-      userImg: require("../assets/user.webp"),
-      messageTime: "4 mins ago",
-      messageText:
-        "Hey there, this is my test for a post of my social app in React Native.",
-    }
-  ];
+  const [messages, setMessages] = useState([]);
 
-  const [messages, setMessages] = useState(Messages);
-  
-  get_test_person().then((data) => {
-    for (let index = 0; index < data.conversations.length; index++) {
-      const conv_id = data.conversations[index];
-      get_conversation(conv_id).then((data) => {
-        var new_messages = [];
-        
-        data.forEach((message) => {
-          new_messages.push({
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await get_test_person();
+        const promises = data.conversations.map(async (conv_id) => {
+          const chatData = await get_conversation(conv_id);
+          const new_messages = chatData.map((message) => ({
             id: conv_id,
             userName: message.user_id,
-            userImg: "https://developer.mozilla.org/pimg/aHR0cHM6Ly9zdGF0aWM0LmJ1eXNlbGxhZHMubmV0L3V1LzIvMTQ2NjYwLzE3MDc3NTUyMDAtbW96X21vbml0b3JfbWRuX2FkXzAyXzI2MHgyMDAucG5n.VAtgbEYsvhsDpFdmQpfOI7OshtQFnoHrxPBae38Zjuc%3D",
+            userImg:
+              "https://developer.mozilla.org/pimg/aHR0cHM6Ly9zdGF0aWM0LmJ1eXNlbGxhZHMubmV0L3UvMi9FdXJvcGUtbmF0aW9uYWwtbG9nby1zdGF0dXMtMi0yLmdpZg.PntQdToUJrSuz2zU2InyD_NvGWuYUJ7O-C4nh_zC61o%3D",
             messageTime: message.time.toDate().toLocaleString(),
             messageText: message.message,
-          });
-        })
-        console.log(new_messages);
-        // Messages = new_messages;
-        setMessages(new_messages);
-      })
-    }
-  })
+          }));
+          return new_messages;
+        });
+
+        const result = await Promise.all(promises);
+        const flattenedMessages = result.flat();
+        setMessages(flattenedMessages);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <Container>
@@ -53,7 +58,10 @@ const MessagesScreen = ({ navigation }) => {
           >
             <UserInfo>
               <UserImgWrapper>
-                <UserImg source={item.userImg} />
+                <UserImg
+                  source={{ uri: item.userImg }}
+                  defaultSource={require("../assets/user.webp")}
+                />
               </UserImgWrapper>
               <TextSection>
                 <UserInfoText>

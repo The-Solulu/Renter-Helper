@@ -5,7 +5,7 @@ import HomeOwnerInfo from "./HomeOwnerInfo";
 
 function AreYouARenterOrOwner({ setIsSignedOn }) {
   const [showRenterInfo, setShowRenterInfo] = useState(false);
-  const[showHomeOwnerInfo, setShowHomeOwnerinfo]= useState(false);
+  const [showHomeOwnerInfo, setShowHomeOwnerinfo] = useState(false);
 
   const handleOwnerPress = () => {
     console.log("I am Home Owner Button pressed");
@@ -23,7 +23,7 @@ function AreYouARenterOrOwner({ setIsSignedOn }) {
     <View>
       {!showRenterInfo && !showHomeOwnerInfo && (
         <View style={styles.container}>
-           <TouchableHighlight
+          <TouchableHighlight
             style={styles.button}
             underlayColor="rgba(255, 255, 255, 0.5)"
             onPress={handleOwnerPress}
@@ -40,7 +40,7 @@ function AreYouARenterOrOwner({ setIsSignedOn }) {
           </TouchableHighlight>
         </View>
       )}
-      {showRenterInfo && <RenterInfo setIsSignedOn={setIsSignedOn}/>}
+      {showRenterInfo && <RenterInfo setIsSignedOn={setIsSignedOn} />}
       {showHomeOwnerInfo && <HomeOwnerInfo setIsSignedOn={setIsSignedOn} />}
     </View>
   );

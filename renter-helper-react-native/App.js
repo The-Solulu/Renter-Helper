@@ -48,7 +48,7 @@ export default function App() {
     return true;
   };
 
-  const [isSignedOn, setIsSignedOn] = useState(false);
+  const [isSignedOn, setIsSignedOn] = useState(true);
 
   if (isSignedOn) {
     return (
@@ -97,7 +97,7 @@ export default function App() {
     );
   } else {
     // Render the AreYouARenterOrOwner component
-    return <LoginScreen setIsSignedOn={setIsSignedOn}/>;
+    return <LoginScreen setIsSignedOn={setIsSignedOn} />;
   }
 }
 

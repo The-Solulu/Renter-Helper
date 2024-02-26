@@ -11,7 +11,7 @@ function ChatScreen() {
     setMessages([
       {
         _id: 1,
-        text: "Hello developer",
+        text: "Hello to you too",
         createdAt: new Date(),
         user: {
           _id: 2,
@@ -21,7 +21,7 @@ function ChatScreen() {
       },
       {
         _id: 2,
-        text: "Hello world",
+        text: "Hello",
         createdAt: new Date(),
         user: {
           _id: 1,
@@ -89,7 +89,7 @@ function ChatScreen() {
       scrollToBottomComponent={scrollToBottomComponent}
     />
   );
-};
+}
 
 export default ChatScreen;
 
