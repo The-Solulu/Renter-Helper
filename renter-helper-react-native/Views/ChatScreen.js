@@ -1,8 +1,25 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { View, ScrollView, Text, Button, StyleSheet } from "react-native";
-import { Bubble, GiftedChat, Send } from "react-native-gifted-chat";
+import {
+  Bubble,
+  GiftedChat,
+  Send,
+  MessageImage,
+} from "react-native-gifted-chat";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+
+function CustomMessageImage(props) {
+  const { containerStyle, imageStyle, imageProps } = props;
+  return (
+    <View style={containerStyle}>
+      <MessageImage
+        {...imageProps}
+        style={[styles.customImageStyle, imageStyle]}
+      />
+    </View>
+  );
+}
 
 function ChatScreen() {
   const [messages, setMessages] = useState([]);
@@ -16,7 +33,7 @@ function ChatScreen() {
         user: {
           _id: 2,
           name: "React Native",
-          avatar: "https://placeimg.com/140/140/any",
+          avatar: require("../assets/user.webp"),
         },
       },
       {
@@ -26,7 +43,7 @@ function ChatScreen() {
         user: {
           _id: 1,
           name: "React Native",
-          avatar: "https://placeimg.com/140/140/any",
+          avatar: require("../assets/user.webp"),
         },
       },
     ]);
@@ -67,6 +84,9 @@ function ChatScreen() {
             color: "#fff",
           },
         }}
+        renderMessageImage={(imageProps) => (
+          <CustomMessageImage {...imageProps} />
+        )}
       />
     );
   };

@@ -26,6 +26,7 @@ export const UserImg = styled.Image`
   width: 55px;
   height: 40px;
   border-radius: 25px;
+  margin-right: 8px;
 `;
 
 export const TextSection = styled.View`
