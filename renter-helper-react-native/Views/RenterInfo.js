@@ -279,7 +279,6 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24,
         marginBottom: 20,
-        color: '#333',
         fontFamily: 'GABO', // Modern font
     },
     inputContainer: {
@@ -293,7 +292,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 1,
         borderColor: '#DDDDDD',
-        color: '#333',
         fontFamily: 'Arial', // Modern font
     },
     pickerContainer: {
@@ -301,7 +299,6 @@ const styles = StyleSheet.create({
     },
     pickerLabel: {
         marginBottom: 5,
-        color: '#333',
         fontSize: 16,
         fontFamily: 'Arial', // Modern font
     },
@@ -311,7 +308,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 1,
         borderColor: '#DDDDDD',
-        color: '#333',
         fontFamily: 'Arial', // Modern font
     },
 });
