@@ -87,7 +87,21 @@ function RenterInfo() {
               name="Profile Bio"
             />
           </View>
-
+          <View style={styles.inputContainer}>
+            <Controller
+              control={control}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  style={styles.input}
+                  placeholder="Major"
+                  onBlur={onBlur}
+                  onChangeText={value => onChange(value)}
+                  value={value}
+                />
+              )}
+              name="Major"
+            />
+          </View>
           <View style={styles.inputContainer}>
             <Controller
               control={control}
@@ -165,6 +179,7 @@ function RenterInfo() {
                   selectedValue={value}
                   onValueChange={value => onChange(value)}
                 >
+                  <Picker.Item label="" value="" />
                   <Picker.Item label="Quiet" value="Quiet" />
                   <Picker.Item label="Conversational" value="Conversational" />
                   <Picker.Item label="Loud" value="Loud" />
@@ -185,6 +200,8 @@ function RenterInfo() {
                   selectedValue={value}
                   onValueChange={value => onChange(value)}
                 >
+                  <Picker.Item label="" value="" />
+
                   <Picker.Item label="Yes" value="Yes" />
                   <Picker.Item label="No" value="No" />
                 </Picker>
@@ -203,6 +220,8 @@ function RenterInfo() {
                   selectedValue={value}
                   onValueChange={value => onChange(value)}
                 >
+                  <Picker.Item label="" value="" />
+
                   <Picker.Item label="Yes" value="Yes" />
                   <Picker.Item label="No" value="No" />
                 </Picker>
@@ -221,6 +240,8 @@ function RenterInfo() {
                   selectedValue={value}
                   onValueChange={value => onChange(value)}
                 >
+                  <Picker.Item label="" value="" />
+
                   <Picker.Item label="Single" value="Single" />
                   <Picker.Item label="Double" value="Double" />
                   <Picker.Item label="Triple" value="Triple" />
@@ -241,6 +262,8 @@ function RenterInfo() {
                   selectedValue={value}
                   onValueChange={value => onChange(value)}
                 >
+                  <Picker.Item label="" value="" />
+
                   <Picker.Item label="Very" value="Very" />
                   <Picker.Item label="Average" value="Average" />
                   <Picker.Item label="Fair" value="Fair" />
