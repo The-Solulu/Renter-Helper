@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
-function HomeOwnerInfo() {
+function HomeOwnerInfo({ setIsSignedOn }) {
   const questions = [
     { key: 'fullName', question: 'Full Name' },
     { key: 'address', question: 'Address' },
@@ -11,37 +11,33 @@ function HomeOwnerInfo() {
     { key: 'propertySize', question: 'Property Size' },
   ];
 
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [answers, setAnswers] = useState({});
+  const [answers, setAnswers] = React.useState({});
 
-  const handleNext = () => {
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    } else {
-      // Save the answers
-      console.log('Answers:', answers);
-      // You can save the answers to a database or perform any other action here
-    }
+  const handleInputChange = (key, text) => {
+    const updatedAnswers = { ...answers, [key]: text };
+    setAnswers(updatedAnswers);
   };
 
-  const handleInputChange = (text) => {
-    const updatedAnswers = { ...answers, [questions[currentQuestionIndex].key]: text };
-    setAnswers(updatedAnswers);
+  const handleSubmit = () => {
+    console.log('Answers:', answers);
+    setIsSignedOn(true);
+    // You can save the answers to a database or perform any other action here
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{questions[currentQuestionIndex].question}</Text>
-      <TextInput
-        style={styles.input}
-        placeholder={`Enter ${questions[currentQuestionIndex].question}`}
-        onChangeText={handleInputChange}
-        value={answers[questions[currentQuestionIndex].key]}
-      />
-      <Button
-        title={currentQuestionIndex === questions.length - 1 ? 'Submit' : 'Next'}
-        onPress={handleNext}
-      />
+      {questions.map(({ key, question }) => (
+        <View key={key} style={styles.questionContainer}>
+          <Text style={styles.title}>{question}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder={`Enter ${question}`}
+            onChangeText={(text) => handleInputChange(key, text)}
+            value={answers[key]}
+          />
+        </View>
+      ))}
+      <Button title="Submit" onPress={handleSubmit} />
     </View>
   );
 }
@@ -52,10 +48,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
+    backgroundColor: '#EAF6FF', // Light blue background color
+  },
+  questionContainer: {
+    marginBottom: 20,
+    width: '100%',
   },
   title: {
     fontSize: 24,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   input: {
     width: '100%',
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     paddingHorizontal: 10,
-    marginBottom: 20,
+    backgroundColor: '#FFFFFF', // White input background color
   },
 });
 
