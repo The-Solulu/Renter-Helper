@@ -94,7 +94,7 @@ function Home() {
     return (
         <View style={styles.container}>
             {allSwiped ? (
-                <Text style={styles.noMoreCardsText}>No more Available houses in your region 🥲</Text>
+                <Text style={styles.noMoreCardsText}>No more available houses in your region 🥲</Text>
             ) : (
                 <Swiper
                     key={swiperKey}
