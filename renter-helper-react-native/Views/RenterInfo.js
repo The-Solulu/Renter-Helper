@@ -9,7 +9,7 @@ function create_user_with(data) {
     const name = data["Full Name"];
     const bed_time = data["Bed Time"];
     const bio = data["Profile Bio"];
-    const guests = data["Max number of guests"];
+    const guests = parseInt(data["Max number of guests"]);
     const interests = data["Interests"];
     const major = "Computer Science";
     const noise = data["Noise Level"];
@@ -21,12 +21,13 @@ function create_user_with(data) {
     const tidiness = data["Tidiness"];
 
     console.log(data);
-    // new_person_with(name, bed_time, bio, guests, interests, major, noise, pets, pronouns, roommates, smoke, wake_time, tidiness);
+    // new_person_with(name, bed_time, bio, guests, imageUri, interests, major, noise_level, pets, pronouns, roommates, smoking, wake_time, tidiness) 
+    
 }
 
-function RenterInfo() {
+function RenterInfo({ setIsSignedOn }) {
   const { control, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = data => create_user_with(data);
+  const onSubmit = data => setIsSignedOn(true);
 //   console.log(errors);
 
   const handleScroll = () => {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import AreYouARenterOrOwner from './AreYouARenterOrOwner';
 
-const LoginScreen = () => {
+const LoginScreen = ({ setIsSignedOn }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
@@ -41,7 +41,7 @@ const LoginScreen = () => {
           </TouchableOpacity>
         </>
       ) : (
-        <AreYouARenterOrOwner />
+        <AreYouARenterOrOwner setIsSignedOn={setIsSignedOn} />
       )}
     </View>
   );

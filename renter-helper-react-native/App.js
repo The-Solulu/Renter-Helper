@@ -97,7 +97,7 @@ export default function App() {
     );
   } else {
     // Render the AreYouARenterOrOwner component
-    return <LoginScreen />;
+    return <LoginScreen setIsSignedOn={setIsSignedOn}/>;
   }
 }
 

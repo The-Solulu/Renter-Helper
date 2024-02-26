@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
 import RenterInfo from "./RenterInfo";
 import HomeOwnerInfo from "./HomeOwnerInfo";
 
-function AreYouARenterOrOwner() {
+function AreYouARenterOrOwner({ setIsSignedOn }) {
   const [showRenterInfo, setShowRenterInfo] = useState(false);
   const[showHomeOwnerInfo, setShowHomeOwnerinfo]= useState(false);
 
@@ -40,8 +40,8 @@ function AreYouARenterOrOwner() {
           </TouchableHighlight>
         </View>
       )}
-      {showRenterInfo && <RenterInfo/>}
-      {showHomeOwnerInfo && <HomeOwnerInfo />}
+      {showRenterInfo && <RenterInfo setIsSignedOn={setIsSignedOn}/>}
+      {showHomeOwnerInfo && <HomeOwnerInfo setIsSignedOn={setIsSignedOn} />}
     </View>
   );
 }
