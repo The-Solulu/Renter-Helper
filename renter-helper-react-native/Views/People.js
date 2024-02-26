@@ -7,57 +7,80 @@ import {get_test_person} from '../Backend/firebase.js';
 // Your rental data
 var rentalData = [
   {
-    name: 'First and Last Name',
-    interests: 'Reading, cleaning',
-    clean: 'Clean',
-    petPolicy: 'Pet Allowed',
-    smokingPolicy: 'No Smoking',
-    availability: 'Available 7/18',
-    leaseLength: '12-Month Lease',
+    name: 'Franzi',
+    bed_time: '10:30 PM',
+    bio: 'I am a software engineer',
+    guests: 0,
+    interests: ['Reading', 'Coding', 'Hiking'],
+    major: 'Computer Science',
+    noise_level: 3,
+    pets: false,
+    pronouns: 'she/her',
+    roommates: 3,
+    smoking: false,
+    wake_time: '6:30 AM',
+    tidiness: 1,
     imageUri: 'https://t4.ftcdn.net/jpg/03/83/25/83/360_F_383258331_D8imaEMl8Q3lf7EKU2Pi78Cn0R7KkW9o.jpg',
   },
   {
-    name: 'First and Last Name',
-    interests: 'Reading, cleaning',
-    clean: 'Clean',
-    petPolicy: 'Pet Allowed',
-    smokingPolicy: 'No Smoking',
-    availability: 'Available 7/18',
-    leaseLength: '12-Month Lease',
+    name: 'Franzi',
+    bed_time: '10:30 PM',
+    bio: 'I am a software engineer',
+    guests: 0,
+    interests: ['Reading', 'Coding', 'Hiking'],
+    major: 'Computer Science',
+    noise_level: 3,
+    pets: false,
+    pronouns: 'she/her',
+    roommates: 3,
+    smoking: false,
+    wake_time: '6:30 AM',
+    tidiness: 1,
     imageUri: 'https://t4.ftcdn.net/jpg/03/83/25/83/360_F_383258331_D8imaEMl8Q3lf7EKU2Pi78Cn0R7KkW9o.jpg',
   },
   {
-    name: 'First and Last Name',
-    interests: 'Reading, cleaning',
-    clean: 'Clean',
-    petPolicy: 'Pet Allowed',
-    smokingPolicy: 'No Smoking',
-    availability: 'Available 7/18',
-    leaseLength: '12-Month Lease',
+    name: 'Franzi',
+    bed_time: '10:30 PM',
+    bio: 'I am a software engineer',
+    guests: 0,
+    interests: ['Reading', 'Coding', 'Hiking'],
+    major: 'Computer Science',
+    noise_level: 3,
+    pets: false,
+    pronouns: 'she/her',
+    roommates: 3,
+    smoking: false,
+    wake_time: '6:30 AM',
+    tidiness: 1,
     imageUri: 'https://t4.ftcdn.net/jpg/03/83/25/83/360_F_383258331_D8imaEMl8Q3lf7EKU2Pi78Cn0R7KkW9o.jpg',
-  }
+  },
+  
 ];
 
 // Rental card component
 function RentalCard({ card }) {
   return (
     <View style={styles.card}>
-      <Image
-        style={styles.image}
-        source={{ uri: card.imageUri }}
-      />
-      <Text style={styles.name}>{card.name}</Text>
+      <Image style={styles.image} source={{ uri: card.imageUri }} />
+      <Text style={styles.name}>{card.name} ({card.pronouns})</Text>
+      {/* <Text style={styles.bio}>{card.bio}</Text> */}
+      {/* <Text style={styles.detailsText}>Major: {card.major}</Text> */}
+      <Text style={styles.detailsText}>Interests: {card.interests.join(', ')}</Text>
       <View style={styles.detailsRow}>
-        <Text style={styles.detailsText}>{card.interests}</Text>
-        <Text style={styles.detailsText}>{card.clean}</Text>
+        <Text style={styles.detailsText}>Bed Time: {card.bed_time}</Text>
+        <Text style={styles.detailsText}>Wake Time: {card.wake_time}</Text>
       </View>
       <View style={styles.detailsRow}>
-        <Text style={styles.detailsText}>{card.petPolicy}</Text>
-        <Text style={styles.detailsText}>{card.smokingPolicy}</Text>
+        <Text style={styles.detailsText}>Guests: {card.guests}</Text>
+        <Text style={styles.detailsText}>Roommates: {card.roommates}</Text>
       </View>
       <View style={styles.detailsRow}>
-        <Text style={styles.availability}>{card.availability}</Text>
-        <Text style={styles.leaseLength}>{card.leaseLength}</Text>
+        <Text style={styles.detailsText}>Noise Level: {card.noise_level}/5</Text>
+        <Text style={styles.detailsText}>Tidiness: {card.tidiness}/5</Text>
+      </View>
+      <View style={styles.detailsRow}>
+        <Text style={styles.detailsText}>Pets: {card.pets ? "Yes" : "No"}</Text>
+        <Text style={styles.detailsText}>Smoking: {card.smoking ? "Yes" : "No"}</Text>
       </View>
       <View style={styles.actionIconsContainer}>
         <MaterialCommunityIcons name="close" size={34} color="red" />
@@ -84,7 +107,7 @@ function People() {
     <View style={styles.container}>
       {allSwiped ? (
         <Text style={styles.noMoreCardsText}>
-          No more Available houses in your region 🥲
+          No more potential housmates nearby 🥲
         </Text>
       ) : (
         <Swiper
@@ -102,8 +125,13 @@ function People() {
 }
 
 // Constants for styling
+// const { width, height } = Dimensions.get('window');
+// const cardMargin = 10;
+
 const { width, height } = Dimensions.get('window');
 const cardMargin = 10;
+const cardWidth = width - (cardMargin * 5);
+const cardHeight = height * 0.7;
 
 // StyleSheet
 const styles = StyleSheet.create({
@@ -112,7 +140,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: height / 2,
+    marginTop: cardHeight / 3,
   },
   container: {
     flex: 1,
@@ -124,8 +152,10 @@ const styles = StyleSheet.create({
     borderColor: '#E8E8E8',
     backgroundColor: 'white',
     margin: cardMargin,
-    width: width - cardMargin * 2, // Adjust card width based on screen width
-    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: cardWidth,
+    height: cardHeight,
   },
   name: {
     fontSize: 24,
@@ -133,9 +163,15 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     textAlign: 'center',
   },
+  bio: {
+    fontSize: 16,
+    marginVertical: 5,
+    textAlign: 'center',
+    paddingHorizontal: 10,
+  },
   image: {
     width: '100%',
-    aspectRatio: 1,
+    aspectRatio: 1.4,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     resizeMode: 'cover',
@@ -148,6 +184,7 @@ const styles = StyleSheet.create({
   },
   detailsText: {
     fontSize: 16,
+    flex: 1
   },
   availability: {
     fontSize: 16,
@@ -157,7 +194,8 @@ const styles = StyleSheet.create({
   },
   actionIconsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
+    width: '100%',
     padding: 10,
   },
 });

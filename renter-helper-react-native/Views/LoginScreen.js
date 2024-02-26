@@ -8,18 +8,17 @@ const LoginScreen = ({ setIsSignedOn }) => {
   const [loggedIn, setLoggedIn] = useState(false);
 
   const handleLogin = () => {
-//keep login stuff here later
+    // Keep login logic here
     if (!email || !password) {
-      Alert.alert('Error', 'Please enter a valid email and password');
+      Alert.alert('Error', <Text>Please enter a valid email and password</Text>);
       return;
     }
 
-    
     setLoggedIn(true);
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       {!loggedIn ? (
         <>
           <Text style={styles.title}>Login</Text>
@@ -52,7 +51,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // padding: 20,
+    padding: 20,
   },
   title: {
     fontSize: 24,
