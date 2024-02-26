@@ -2,12 +2,32 @@ import React from 'react';
 import { ScrollView, Button, TextInput, StyleSheet, Text, TouchableWithoutFeedback, Keyboard, View } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { Picker } from '@react-native-picker/picker';
+import {new_person_with} from '../Backend/firebase.js';
 import Icon from 'react-native-vector-icons/FontAwesome'; // Import an icon from react-native-vector-icons
+
+function create_user_with(data) {
+    const name = data["Full Name"];
+    const bed_time = data["Bed Time"];
+    const bio = data["Profile Bio"];
+    const guests = data["Max number of guests"];
+    const interests = data["Interests"];
+    const major = "Computer Science";
+    const noise = data["Noise Level"];
+    const pets = data["Are you ok with pets?"];
+    const pronouns = data["Pronouns"];
+    const roommates = data["Roommates"];
+    const smoke = data["Do you smoke?"];
+    const wake_time = data["Wake Up Time"];
+    const tidiness = data["Tidiness"];
+
+    console.log(data);
+    // new_person_with(name, bed_time, bio, guests, interests, major, noise, pets, pronouns, roommates, smoke, wake_time, tidiness);
+}
 
 function RenterInfo() {
   const { control, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = data => console.log(data);
-  console.log(errors);
+  const onSubmit = data => create_user_with(data);
+//   console.log(errors);
 
   const handleScroll = () => {
     Keyboard.dismiss(); // Dismiss the keyboard when scrolling

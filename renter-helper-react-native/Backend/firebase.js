@@ -151,7 +151,7 @@ export async function new_home(home) {
     });
 }
 
-export async function new_home(address, price, bedrooms, bathrooms, petPolicy, smokingPolicy, availability, leaseLength, imageUri) {
+export async function new_home_with(address, price, bedrooms, bathrooms, petPolicy, smokingPolicy, availability, leaseLength, imageUri) {
     const db = getFirestore(app);
     const docRef = await addDoc(collection(db, "Home"), {
     });
@@ -275,7 +275,7 @@ export async function new_person(person) {
     });
 }
 
-export async function new_person(name, bed_time, bio, guests, imageUri, interests, major, noise_level, pets, pronouns, roommates, smoking, wake_time, tidiness) {
+export async function new_person_with(name, bed_time, bio, guests, imageUri, interests, major, noise_level, pets, pronouns, roommates, smoking, wake_time, tidiness) {
     const db = getFirestore(app);
     const docRef = await addDoc(collection(db, "Renter"), {
     });
